@@ -1,0 +1,16 @@
+.app {
+  width: 100%;
+}
+
+.app-header {
+  background-color: lightgreen;
+  text-align: center;
+  height: 10px;
+  padding: 10px;
+  color: black;
+}
+
+.app-main-container {
+  display: flex;
+  padding: 10px;
+}
