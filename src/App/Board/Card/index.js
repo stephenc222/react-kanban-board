@@ -1,12 +1,26 @@
 import React from 'react'
-import { DragSource } from 'react-dnd'
+import { DragSource, DropTarget } from 'react-dnd'
+import flow from 'lodash.flow'
+import './index.css'
 
-// Card - basic DragSource of entire App
+const cardDropSpec = {
+  
+  }
+  
+  function cardDropCollect(connect, monitor) {
+    return {
+      connectDropTarget: connect.dropTarget(),
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop()
+    }
+  }
+  
+// Card - basic DragSource and DropTarget of entire App
 
 const cardDragSource = {
   canDrag(props) {
     // You can disallow drag based on props
-    return props.isReady;
+    return  true// props.isReady;
   },
 
   isDragging(props, monitor) {
@@ -14,7 +28,7 @@ const cardDragSource = {
     // (like a card in Kanban board dragged between lists)
     // you can implement something like this to keep its
     // appearance dragged:
-    return monitor.getItem().id === props.id;
+    return true//monitor.getItem().id === props.id;
   },
 
   beginDrag(props, monitor, component) {
@@ -55,13 +69,17 @@ const cardDragSource = {
     }
   }
 const Card = (props) => {
-  console.log({props})
-  return (
-    <div className='card-container'>
-      <div className='card-title'>{props.cardData.cardTitle}</div>
-      <div className='card-summary'>{props.cardData.cardSummary}</div>
-    </div>
+  return props.connectDragSource(
+    props.connectDropTarget(
+      <div className='card-container'>
+        <div className='card-title'>{props.cardData.cardTitle}</div>
+        <div className='card-summary'>{props.cardData.cardSummary}</div>
+      </div>
+    )
   )
 }
 
-export default DragSource('kanban', cardDragSource, cardDragCollect)(Card)
+export default flow(
+  DragSource('kanban', cardDragSource, cardDragCollect),
+  DropTarget('kanban', cardDropSpec, cardDropCollect)
+)(Card)
