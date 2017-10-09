@@ -105,11 +105,9 @@ class App extends Component {
 
   moveCard(dragCard, dropCard) {
     const lanes = this.state.lanes.slice()
-    console.log({ dragCard, dropCard })
     let dropCardLane = []
     let dragCardLane = []
     for (let lane of lanes) {
-      console.log({lane})
       // find lane of both cards
       if (lane.cards.includes(dropCard)) {
         dropCardLane = lane.cards
@@ -122,7 +120,6 @@ class App extends Component {
 
     for (let card of dragCardLane) {
       if (card === dropCard) {
-        console.log('bail because same lane')
         return
       } else {
         dragCardLane.splice(dragCardLane.indexOf(dragCard), 1)
