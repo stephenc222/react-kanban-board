@@ -8,6 +8,7 @@ const Board = (props) => {
     return (
       <div key={index} className='lane-wrapper-container'>
         <Lane
+          moveCard={props.moveCard}  
           laneData={laneData}
         />  
       </div>

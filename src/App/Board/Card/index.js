@@ -4,8 +4,12 @@ import flow from 'lodash.flow'
 import './index.css'
 
 const cardDropSpec = {
-  
+  drop(props) {
+    return {
+      cardData: props.cardData
+    }
   }
+}
   
   function cardDropCollect(connect, monitor) {
     return {
@@ -19,46 +23,34 @@ const cardDropSpec = {
 
 const cardDragSource = {
   canDrag(props) {
-    // You can disallow drag based on props
-    return  true// props.isReady;
+    // if no cardData, prevent dragging
+    return  props.cardData
   },
 
   isDragging(props, monitor) {
-    // If your component gets unmounted while dragged
-    // (like a card in Kanban board dragged between lists)
-    // you can implement something like this to keep its
-    // appearance dragged:
-    return true//monitor.getItem().id === props.id;
+
+    return props.cardData
   },
 
   beginDrag(props, monitor, component) {
-    // Return the data describing the dragged item
-    const item = { id: props.id };
-    return item;
+    return {
+      cardData: props.cardData
+    }
   },
 
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
-      // You can check whether the drop was successful
-      // or if the drag ended but nobody handled the drop
-      return;
+      return
     }
 
-    // When dropped on a compatible target, do something.
-    // Read the original dragged item from getItem():
-    const item = monitor.getItem();
+    const dragCard = monitor.getItem().cardData
 
-    // You may also read the drop result from the drop target
-    // that handled the drop, if it returned an object from
-    // its drop() method.
-    const dropResult = monitor.getDropResult();
-
-    // This is a good place to call some Flux action
-    // CardActions.moveCardToList(item.id, dropResult.listId);
+    const dropCard = monitor.getDropResult().cardData
+    props.moveCard(dragCard, dropCard)
   }
-};
+}
 
-  
+
   function cardDragCollect(connect, monitor) {
     return {
       // Call this function inside render()

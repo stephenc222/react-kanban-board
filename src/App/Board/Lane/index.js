@@ -6,9 +6,11 @@ import './index.css'
 const Lane = (props) => {
 
   const renderCards = (cardData, index) => {
+    cardData.laneType = props.laneData.laneTitle
     return (
       <div key={index} style={{border: '1px solid magenta', padding: 5}}>
         <Card
+          moveCard={props.moveCard}  
           cardData={cardData}
         />  
       </div>  
