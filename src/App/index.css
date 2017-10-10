@@ -1,5 +1,6 @@
 .app {
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .app-header {
@@ -12,5 +13,6 @@
 
 .app-main-container {
   display: flex;
-  padding: 10px;
+  width: 100%;
+  height: 100%;
 }

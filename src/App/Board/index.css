@@ -1,13 +1,11 @@
 .board-container {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
   width: 100%;
-  padding: 5px;
 }
 
 .lane-wrapper-container {
   display: flex;
   flex-grow: 1;
-  border: 1px solid black;
+  border-right: 1px solid black;
 }

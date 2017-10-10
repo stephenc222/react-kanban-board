@@ -61,10 +61,17 @@ const cardDragSource = {
     }
   }
 const Card = (props) => {
+  const onEditCard = (event) => {
+    return props.onEditCard(event, props.cardData, props.laneIndex, props.cardIndex)
+  }
+
   return props.connectDragSource(
     props.connectDropTarget(
-      <div className='card-container'>
-        <div className='card-title'>{props.cardData.cardTitle}</div>
+      <div onClick={onEditCard} className='card-container'>
+        <div className='card-title-number-container'>
+          <div className='card-title'>{props.cardData.cardTitle}</div>
+          <div className='card-number'>{`# ${props.cardData.cardNumber}`}</div>
+        </div>  
         <div className='card-summary'>{props.cardData.cardSummary}</div>
       </div>
     )

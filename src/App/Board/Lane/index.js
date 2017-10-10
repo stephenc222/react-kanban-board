@@ -11,7 +11,10 @@ const Lane = (props) => {
       <div key={index} style={{border: '1px solid magenta', padding: 5}}>
         <Card
           moveCard={props.moveCard}  
+          onEditCard={props.onEditCard}
           cardData={cardData}
+          cardIndex={index}
+          laneIndex={props.laneIndex}
         />  
       </div>  
     )

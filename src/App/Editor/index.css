@@ -1,0 +1,58 @@
+.editor-main-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+
+.editor-back-button {
+  padding-bottom: 25px;
+}
+
+.editor-content-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  padding: 5px;
+  
+}
+
+.editor-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;  
+}
+
+.editor-title-number-container {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;  
+}
+
+.editor-update-button-number-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 24px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor-update-button {
+  padding-right: 30px;
+  font-size: 24px;
+  display: flex;
+}
+
+input[type='button']
+{
+  font-size: 32px;    
+}
+
+.editor-card-summary-container {
+  border-top: 1px solid lightgray;
+  padding: 10px;
+}

@@ -10,6 +10,8 @@ const Board = (props) => {
         <Lane
           moveCard={props.moveCard}  
           laneData={laneData}
+          laneIndex={index}
+          onEditCard={props.onEditCard}
         />  
       </div>
     )
