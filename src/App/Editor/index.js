@@ -4,21 +4,42 @@ const Editor = (props) => {
   return (
     <div className='editor-main-container'>
       <div className='editor-content-container'> 
+        <div className='editor-back-button'>
+          <input
+            type='button'
+            value='Back To Board'
+            onClick={props.showBoard}
+          />  
+        </div>  
         <div className='editor-header-container'>  
           <div className='editor-back-title-button'>
-            <div className='editor-back-button'>
-              <input
-                type='button'
-                value='Back To Board'
-                onClick={props.showBoard}
-              />  
-            </div>
+            <div className='editor-card-type-input'>
+              <label>
+                <input 
+                  type="radio" 
+                  name="type"   
+                  value="userStory"
+                  checked={props.currentCard.type === 'userStory'}                
+                  onChange={props.onCardInputChange} />
+                &nbsp;User Story  
+              </label>
+              <label>  
+                <input 
+                  type="radio" 
+                  name="type" 
+                  value="bug"
+                  checked={props.currentCard.type === 'bug'}
+                  onChange={props.onCardInputChange} />
+                &nbsp;Bug    
+              </label>  
+            </div>  
+            <div>complexity: {props.currentCard.complexity}</div>
             <div className='editor-title-input'>
               <input
-                onChange={props.onCardTextChange}
-                name='cardTitle'
+                onChange={props.onCardInputChange}
+                name='title'
                 type='text'
-                value={props.currentCard.cardTitle}
+                value={props.currentCard.title}
               />  
             </div>  
           </div>  
@@ -37,9 +58,9 @@ const Editor = (props) => {
         </div>  
         <div className='editor-card-summary-container'>
           <textarea
-            name='cardSummary'  
-            value={props.currentCard.cardSummary}            
-            onChange={props.onCardTextChange}
+            name='summary'  
+            value={props.currentCard.summary}            
+            onChange={props.onCardInputChange}
           />
         </div>  
       </div>  

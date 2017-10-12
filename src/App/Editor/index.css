@@ -26,9 +26,16 @@
   padding: 10px;  
 }
 
+.editor-card-type-input {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
 .editor-title-number-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 5px;  
 }
 

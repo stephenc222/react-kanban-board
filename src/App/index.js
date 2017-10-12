@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.onCardTextChange = this.onCardTextChange.bind(this)
+    this.onCardInputChange = this.onCardInputChange.bind(this)
     this.onUpdateCard = this.onUpdateCard.bind(this)
     this.showBoard = this.showBoard.bind(this)
     this.addCard = this.addCard.bind(this)
@@ -43,8 +43,8 @@ class App extends Component {
       laneIndex: null,
       currentCard: {
         id: RandomID(),
-        cardTitle: '',
-        cardSummary: ''
+        title: '',
+        summary: ''
       }
     }
   }
@@ -55,74 +55,92 @@ class App extends Component {
 
     const dummyPlannedCards = [
       {
+        type: 'userStory',
+        complexity: 2,        
         id: RandomID(),
         cardNumber: 100,
-        cardTitle: 'planned card 1',
-        cardSummary: 'summary for planned card 1'
+        title: 'planned card 1',
+        summary: 'summary for planned card 1'
       },
       {
+        type: 'userStory',        
+        complexity: 1,        
         id: RandomID(),
         cardNumber: 101,        
-        cardTitle: 'planned card 2',
-        cardSummary: 'summary for planned card 2'
+        title: 'planned card 2',
+        summary: 'summary for planned card 2'
       }
     ]
 
     const dummyInDevCards = [
       {
+        type: 'userStory',    
+        complexity: 3,        
         id: RandomID(),   
         cardNumber: 102,        
-        cardTitle: 'in dev card 1',
-        cardSummary: 'summary for in dev card 1'
+        title: 'in dev card 1',
+        summary: 'summary for in dev card 1'
       },
       {
+        type: 'bug',       
+        complexity: 4,        
         id: RandomID(),        
         cardNumber: 103,        
-        cardTitle: 'in dev card 2',
-        cardSummary: 'summary for in dev card 2'
+        title: 'in dev card 2',
+        summary: 'summary for in dev card 2'
       },
       {
+        type: 'userStory',    
+        complexity: 5,        
         id: RandomID(),        
         cardNumber: 104,        
-        cardTitle: 'in dev card 3',
-        cardSummary: 'summary for in dev card 3'
+        title: 'in dev card 3',
+        summary: 'summary for in dev card 3'
       }
     ]
 
     const dummyInTestingCards = [
       {
+        type: 'userStory',   
+        complexity: 2,        
         id: RandomID(),      
         cardNumber: 105,        
-        cardTitle: 'in testing card 1',
-        cardSummary: 'summary for in testing card 1'
+        title: 'in testing card 1',
+        summary: 'summary for in testing card 1'
       },
       {
+        type: 'bug',    
+        complexity: 1,        
         id: RandomID(),   
         cardNumber: 106,        
-        cardTitle: 'in testing card 2',
-        cardSummary: 'summary for in testing card 2'
+        title: 'in testing card 2',
+        summary: 'summary for in testing card 2'
       }
     ]
 
     const dummyInDone = [
       {
+        type: 'userStory',  
+        complexity: 1,
         id: RandomID(),  
         cardNumber: 107,        
-        cardTitle: 'in done card 1',
-        cardSummary: 'summary for in done card 1'
+        title: 'in done card 1',
+        summary: 'summary for in done card 1'
       },
       {
+        type: 'bug',   
+        complexity: 3,        
         id: RandomID(),        
         cardNumber: 108,        
-        cardTitle: 'in done card 2',
-        cardSummary: 'summary for in done card 2'
+        title: 'in done card 2',
+        summary: 'summary for in done card 2'
       }
     ]
 
     lanes[0].cards = dummyPlannedCards
     lanes[1].cards = dummyInDevCards
     lanes[2].cards = dummyInTestingCards
-    lanes[2].cards = dummyInDone
+    lanes[3].cards = dummyInDone
 
     this.setState({lanes})
 
@@ -144,7 +162,7 @@ class App extends Component {
     })
   }
 
-  onCardTextChange(event) {
+  onCardInputChange(event) {
     const { currentCard } = this.state
 
     currentCard[event.target.name] = event.target.value
@@ -171,7 +189,7 @@ class App extends Component {
       lanes
     } = this.state
 
-    if (currentCard.cardTitle.length && currentCard.cardSummary.length) {
+    if (currentCard.title.length && currentCard.summary.length) {
       // only update a card if the card is not empty in the editor
       // removing a card is a separate action
       lanes[laneIndex].cards[cardIndex] = currentCard
@@ -238,7 +256,7 @@ class App extends Component {
                   currentCard={this.state.currentCard}
                   removeCard={this.removeCard}
                   onUpdateCard={this.onUpdateCard}
-                  onCardTextChange={this.onCardTextChange}
+                  onCardInputChange={this.onCardInputChange}
                 />
               )
             : (
