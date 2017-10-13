@@ -14,6 +14,29 @@
   padding: 5px;
 }
 
+.card-complexity-container {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 5px;
+}
+
+.card-complexity-item {
+  background: transparent;
+  margin: 1px;  
+  min-height: 5px;
+  min-width: 5px;
+  border-radius: 50%;  
+}
+
+.card-complexity-item--selected {
+  border: 1px solid black;
+  background: gold;
+  margin: 1px;
+  min-height: 5px;
+  min-width: 5px;
+  border-radius: 50%;
+}
+
 .card-title-number-container {
   display: flex;
   flex-direction: row;

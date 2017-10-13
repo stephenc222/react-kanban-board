@@ -31,7 +31,30 @@
   flex-direction: column;
 }
 
+.editor-card-complexity-container {
+  display: flex;
+  flex-direction: row;
+}
 
+.editor-card-complexity-item {
+  border: 1px solid black;
+  background: white;
+  margin: 3px;  
+  min-height: 20px;
+  min-width: 20px;
+  border-radius: 50%;  
+  flex-grow: 1;  
+}
+
+.editor-card-complexity-item--selected {
+  border: 1px solid black;
+  background: gold;
+  margin: 3px;
+  min-height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  flex-grow: 1;  
+}
 
 .editor-title-number-container {
   display: flex;

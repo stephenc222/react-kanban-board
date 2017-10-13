@@ -1,6 +1,23 @@
 import React from 'react'
 import './index.css'
 const Editor = (props) => {
+
+  let complexArr = [1,2,3,4,5]
+  const renderComplexity = (complexItem) => {
+    const changeComplexity = (e) => {
+      return props.changeComplexity(e,complexItem)
+    }
+    if (complexItem <= props.currentCard.complexity) {
+      return (
+        <div key={complexItem} onClick={changeComplexity} className='editor-card-complexity-item--selected'/>
+      )
+    } else {
+      return (
+        <div key={complexItem} onClick={changeComplexity} className='editor-card-complexity-item'/>        
+      )
+    }
+  }
+
   return (
     <div className='editor-main-container'>
       <div className='editor-content-container'> 
@@ -34,6 +51,9 @@ const Editor = (props) => {
               </label>  
             </div>  
             <div>complexity: {props.currentCard.complexity}</div>
+              <div className='editor-card-complexity-container'>
+                {complexArr.map(renderComplexity)}
+              </div>
             <div className='editor-title-input'>
               <input
                 onChange={props.onCardInputChange}

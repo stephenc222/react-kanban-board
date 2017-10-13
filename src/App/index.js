@@ -10,6 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props)
 
+    this.changeComplexity = this.changeComplexity.bind(this)
     this.onCardInputChange = this.onCardInputChange.bind(this)
     this.onUpdateCard = this.onUpdateCard.bind(this)
     this.showBoard = this.showBoard.bind(this)
@@ -155,6 +156,13 @@ class App extends Component {
     })
   }
 
+  changeComplexity(event, complexity) {
+    event.stopPropagation()    
+    const { currentCard } = this.state
+    currentCard['complexity'] = complexity
+    this.setState({currentCard})
+  }
+
   displayBoard(event) {
     event.stopPropagation()
     this.setState({
@@ -249,6 +257,7 @@ class App extends Component {
             this.state.showEditor
             ? (
                 <Editor
+                  changeComplexity={this.changeComplexity}  
                   showBoard={this.showBoard}  
                   cardIndex={this.state.cardIndex}
                   laneIndex={this.state.laneIndex}

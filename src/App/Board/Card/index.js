@@ -61,6 +61,19 @@ const cardDragSource = {
     }
   }
 const Card = (props) => {
+
+  let complexArr = [1,2,3,4,5]
+  const renderComplexity = (complexItem) => {
+    if (complexItem <= props.cardData.complexity) {
+      return (
+        <div key={complexItem} className='card-complexity-item--selected'/>
+      )
+    } else {
+      return (
+        <div key={complexItem} className='card-complexity-item'/>        
+      )
+    }
+  }
   const onEditCard = (event) => {
     return props.onEditCard(event, props.cardData, props.laneIndex, props.cardIndex)
   }
@@ -72,7 +85,9 @@ const Card = (props) => {
         className={
           `card-container--${props.cardData.type === 'userStory' ? 'user-story' : 'bug'}`
         }>
-        <div className='card-complexity'>{props.cardData.complexity}</div>
+        <div className='card-complexity-container'>
+          {complexArr.map(renderComplexity)}
+        </div>
         <div className='card-title-number-container'>
           <div className='card-title'>{props.cardData.title}</div>
           <div className='card-number'>{`# ${props.cardData.cardNumber}`}</div>
