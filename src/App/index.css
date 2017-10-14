@@ -6,7 +6,8 @@
 .app-header {
   background-color: lightgreen;
   text-align: center;
-  height: 10px;
+  font-size: 22px;
+  height: 28px;
   padding: 10px;
   color: black;
 }
@@ -15,4 +16,5 @@
   display: flex;
   width: 100%;
   height: 100%;
+  flex-direction: column;
 }

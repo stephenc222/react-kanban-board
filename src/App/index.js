@@ -249,10 +249,10 @@ class App extends Component {
   render() {
     return (
       <div className="app">
+      <div className='app-main-container'>
         <header className="app-header">
           {this.state.projectTitle}
         </header>
-        <div className='app-main-container'>
           {
             this.state.showEditor
             ? (

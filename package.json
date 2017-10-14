@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "draft-js": "^0.10.3",
     "lodash.flow": "^3.5.0",
     "random-id": "0.0.2",
     "react": "^16.0.0",
