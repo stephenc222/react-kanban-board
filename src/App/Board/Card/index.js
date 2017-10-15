@@ -24,7 +24,7 @@ const cardDropSpec = {
 const cardDragSource = {
   canDrag(props) {
     // if no cardData, prevent dragging
-    return  props.cardData
+    return  !props.cardData.isPlaceholderCard
   },
 
   isDragging(props, monitor) {
@@ -83,10 +83,10 @@ const Card = (props) => {
       <div
         onClick={onEditCard}
         className={
-          `card-container--${props.cardData.type === 'userStory' ? 'user-story' : 'bug'}`
+          `card-container--${!props.cardData.isPlaceholderCard ? props.cardData.type : 'placeholder'}`
         }>
         <div className='card-complexity-container'>
-          {complexArr.map(renderComplexity)}
+          {!props.cardData.isPlaceholderCard && complexArr.map(renderComplexity)}
         </div>
         <div className='card-title-number-container'>
           <div className='card-title'>{props.cardData.title}</div>

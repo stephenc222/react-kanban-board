@@ -264,14 +264,30 @@ class App extends Component {
         return
       } else {
         dragCardLane.splice(dragCardLane.indexOf(dragCard), 1)
-        dropCardLane.splice(dropCardLane.indexOf(dropCard), 0, dragCard)
+        if (dropCard.isPlaceholderCard) {
+          dropCardLane.splice(dropCardLane.indexOf(dropCard), 1, dragCard)
+        } else {
+          dropCardLane.splice(dropCardLane.indexOf(dropCard), 0, dragCard)          
+        }
+
+        dragCardLane.length === 0 && dragCardLane.push(
+          {
+            type: 'bug',   
+            complexity: 3,        
+            id: RandomID(),        
+            cardNumber: 108,        
+            title: 'DUMMY',
+            summary: 'just some placeholder text',
+            isPlaceholderCard: true
+          }
+        )
 
         if (boardControls.sortType === 'leastComplex') {
           lanes.forEach(lane => lane.cards.sort((a,b) => a.complexity - b.complexity ))      
         } else if (boardControls.sortType === 'mostComplex') {
           lanes.forEach(lane => lane.cards.sort((a,b) => b.complexity - a.complexity ))      
         }
-        
+
         this.setState({ lanes })
         return 
       }

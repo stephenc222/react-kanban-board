@@ -1,10 +1,15 @@
-.card-container--user-story {
+.card-container--userStory {
   display: flex;
   flex-direction: column;
   background: rgb(252, 246, 195);
   border: 1px solid darkgoldenrod;
   box-shadow: 0 0 5px grey;
   padding: 5px;
+}
+
+.card-container--placeholder {
+  visibility: none;
+  color: transparent;
 }
 
 .card-container--bug {
