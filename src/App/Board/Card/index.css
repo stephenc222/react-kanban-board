@@ -3,6 +3,7 @@
   flex-direction: column;
   background: rgb(252, 246, 195);
   border: 1px solid darkgoldenrod;
+  box-shadow: 0 0 5px grey;
   padding: 5px;
 }
 
@@ -11,6 +12,7 @@
   flex-direction: column;
   background: #f8d9d9;
   border: 1px solid rgb(231, 96, 72);
+  box-shadow: 0 0 5px grey;  
   padding: 5px;
 }
 

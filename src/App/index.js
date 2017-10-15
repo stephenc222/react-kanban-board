@@ -10,6 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props)
 
+    this.onBoardControlChange = this.onBoardControlChange.bind(this)
     this.changeComplexity = this.changeComplexity.bind(this)
     this.onCardInputChange = this.onCardInputChange.bind(this)
     this.onUpdateCard = this.onUpdateCard.bind(this)
@@ -46,6 +47,10 @@ class App extends Component {
         id: RandomID(),
         title: '',
         summary: ''
+      },
+      boardControls: {
+        sortType: 'leastComplex',
+        searchValue: ''
       }
     }
   }
@@ -143,6 +148,9 @@ class App extends Component {
     lanes[2].cards = dummyInTestingCards
     lanes[3].cards = dummyInDone
 
+    // defaults to sorted by least complex
+    lanes.forEach(lane => lane.cards.sort((a,b) => a.complexity - b.complexity ))
+
     this.setState({lanes})
 
   }
@@ -167,6 +175,21 @@ class App extends Component {
     event.stopPropagation()
     this.setState({
       showEditor: false
+    })
+  }
+
+  onBoardControlChange(event) {
+    const boardControls = { ...this.state.boardControls }
+    const lanes = this.state.lanes.slice()
+    boardControls[event.target.name] = event.target.value
+
+    if (event.target.value === 'leastComplex') {
+      lanes.forEach(lane => lane.cards.sort((a,b) => a.complexity - b.complexity ))      
+    } else if (event.target.value === 'mostComplex') {
+      lanes.forEach(lane => lane.cards.sort((a,b) => b.complexity - a.complexity ))      
+    }
+    this.setState({
+      boardControls
     })
   }
 
@@ -270,6 +293,8 @@ class App extends Component {
               )
             : (
                 <Board
+                  boardControls={this.state.boardControls}
+                  onBoardControlChange={this.onBoardControlChange}
                   lanes={this.state.lanes}
                   moveCard={this.moveCard}
                   addCard={this.addCard}
