@@ -2,7 +2,6 @@
   display: flex;
   width: 100%;
   height: 100%;
-  padding: 5px;
 }
 
 .editor-back-button {
@@ -14,7 +13,6 @@
   width: 100%;
   height: 100%;
   flex-direction: column;
-  padding: 5px;
   
 }
 
@@ -23,7 +21,6 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  padding: 10px;  
 }
 
 .editor-card-type-input {
@@ -85,4 +82,49 @@ input[type='button']
 .editor-card-summary-container {
   border-top: 1px solid lightgray;
   padding: 10px;
+}
+
+.draft-editor-controls {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+  user-select: none;
+}
+
+.draft-editor--root {
+  background: #fff;
+  border: 1px solid #ddd;
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+}
+
+.draft-editor--editor {
+  border-top: 1px solid #ddd;
+  cursor: text;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.draft-editor--editor .public-DraftEditor-content {
+  min-height: 100px;
+}
+
+.draft-editor--hidePlaceholder .public-draft-editor-placeholder-root {
+  display: none;
+}
+
+.draft-editor--editor .draft-editor--blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-family: 'Hoefler Text', 'Georgia', serif;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 10px 20px;
+}
+
+.draft-editor--editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+  font-size: 16px;
+  padding: 20px;
 }
