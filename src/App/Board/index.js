@@ -51,7 +51,12 @@ const Board = (props) => {
               name="searchValue"   
               value={props.boardControls.searchValue}
               onChange={props.onBoardControlChange} />
-          </label>  
+          </label> 
+          &nbsp;
+          <input
+            type='button'
+            onClick={props.onBoardSearchReset}
+            value='Reset' />
         </div>  
         <div className='board-controls--search-control'>
         </div>  

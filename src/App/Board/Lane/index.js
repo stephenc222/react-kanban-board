@@ -19,14 +19,13 @@ const Lane = (props) => {
       </div>  
     )
   }
-
   return (
     <div className='lane-container'>
       <div className='lane-title'>
         {props.laneData.laneTitle}  
       </div>  
       <div className='lane-content-container'>
-        {props.laneData.cards.map(renderCards)}
+        {props.laneData.cards && props.laneData.cards.map(renderCards)}
       </div>
     </div>
   )

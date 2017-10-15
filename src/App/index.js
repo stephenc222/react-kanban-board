@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import { DragDropContext } from 'react-dnd'
 import RandomID from 'random-id'
 import HTML5Backend from 'react-dnd-html5-backend'
-import './index.css'
 import Board from './Board'
 import Editor from './Editor'
+import './index.css'
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.onBoardControlChange = this.onBoardControlChange.bind(this)
+    this.onBoardSearchReset = this.onBoardSearchReset.bind(this)
     this.changeComplexity = this.changeComplexity.bind(this)
     this.onCardInputChange = this.onCardInputChange.bind(this)
     this.onUpdateCard = this.onUpdateCard.bind(this)
@@ -22,6 +23,7 @@ class App extends Component {
 
     this.state = {
       projectTitle: 'Your Project Title',
+      filteredCardLanes: [],
       lanes: [
         {
           laneTitle: 'Planned',
@@ -41,6 +43,7 @@ class App extends Component {
         }
       ],
       showEditor: false,
+      isSearching: false,
       cardIndex: null,
       laneIndex: null,
       currentCard: {
@@ -178,10 +181,41 @@ class App extends Component {
     })
   }
 
+  onBoardSearchReset(event) {
+    event.stopPropagation()
+    const boardControls = { ...this.state.boardControls }
+    boardControls.searchValue = ''
+    this.setState({
+      isSearching: false,
+      boardControls
+    })
+  }
+
   onBoardControlChange(event) {
     const boardControls = { ...this.state.boardControls }
     const lanes = this.state.lanes.slice()
+    let filteredCardLanes = this.state.filteredCardLanes.slice()
+    let isSearching = false
     boardControls[event.target.name] = event.target.value
+    if (event.target.name === 'searchValue' && event.target.value.length > 0) {
+      const searchValue = event.target.value
+      isSearching = true
+      if (parseInt(searchValue, 10)) {
+        // search through card cardNumber property, returning exact match
+        filteredCardLanes = [].concat(lanes.map(lane => {
+          const filteredLane = {
+            laneTitle: lane.laneTitle,
+            cards: []
+          }
+          filteredLane.cards = lane.cards.filter(card => {
+            return card.cardNumber === parseInt(searchValue, 10)
+          })
+          return filteredLane
+        }))
+      } else {
+        // TODO: search through card type and summary
+      }
+    }
 
     if (event.target.value === 'leastComplex') {
       lanes.forEach(lane => lane.cards.sort((a,b) => a.complexity - b.complexity ))      
@@ -189,7 +223,9 @@ class App extends Component {
       lanes.forEach(lane => lane.cards.sort((a,b) => b.complexity - a.complexity ))      
     }
     this.setState({
-      boardControls
+      isSearching,
+      boardControls,
+      filteredCardLanes
     })
   }
 
@@ -317,9 +353,10 @@ class App extends Component {
               )
             : (
                 <Board
+                  onBoardSearchReset={this.onBoardSearchReset}  
                   boardControls={this.state.boardControls}
                   onBoardControlChange={this.onBoardControlChange}
-                  lanes={this.state.lanes}
+                  lanes={!this.state.isSearching ? this.state.lanes: this.state.filteredCardLanes}
                   moveCard={this.moveCard}
                   addCard={this.addCard}
                   onEditCard={this.onEditCard}
