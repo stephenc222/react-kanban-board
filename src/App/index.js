@@ -245,6 +245,7 @@ class App extends Component {
 
   moveCard(dragCard, dropCard) {
     const lanes = this.state.lanes.slice()
+    const boardControls = {...this.state.boardControls}
     let dropCardLane = []
     let dragCardLane = []
     for (let lane of lanes) {
@@ -264,6 +265,13 @@ class App extends Component {
       } else {
         dragCardLane.splice(dragCardLane.indexOf(dragCard), 1)
         dropCardLane.splice(dropCardLane.indexOf(dropCard), 0, dragCard)
+
+        if (boardControls.sortType === 'leastComplex') {
+          lanes.forEach(lane => lane.cards.sort((a,b) => a.complexity - b.complexity ))      
+        } else if (boardControls.sortType === 'mostComplex') {
+          lanes.forEach(lane => lane.cards.sort((a,b) => b.complexity - a.complexity ))      
+        }
+        
         this.setState({ lanes })
         return 
       }
