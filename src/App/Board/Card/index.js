@@ -85,14 +85,17 @@ const Card = (props) => {
         className={
           `card-container--${!props.cardData.isPlaceholderCard ? props.cardData.type : 'placeholder'}`
         }>
-        <div className='card-complexity-container'>
-          {!props.cardData.isPlaceholderCard && complexArr.map(renderComplexity)}
-        </div>
-        <div className='card-title-number-container'>
-          <div className='card-title'>{props.cardData.title}</div>
+        <div className='card-top-container'>  
+          <div className='card-complexity-container'>
+            {!props.cardData.isPlaceholderCard && complexArr.map(renderComplexity)}
+          </div>
           <div className='card-number'>{`# ${props.cardData.cardNumber}`}</div>
         </div>  
+        <div className='card-title-container'>
+          <div className='card-title'>{props.cardData.title}</div>
+        </div>  
         <div className='card-summary'>{props.cardData.summary}</div>
+        <div className='card-assignee'>{props.cardData.assignee.name}</div>
       </div>
     )
   )

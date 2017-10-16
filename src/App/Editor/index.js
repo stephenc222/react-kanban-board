@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Editor as DraftEditor, EditorState as DraftEditorState, RichUtils } from 'draft-js'
+import { Editor as DraftEditor, EditorState as DraftEditorState, RichUtils, convertFromRaw } from 'draft-js'
 import { BlockStyleControls, InlineStyleControls } from './Controls'
 import 'draft-js/dist/Draft.css'
 import './index.css'
@@ -23,6 +23,7 @@ class Editor extends Component {
 
   constructor(props) {
     super(props) 
+    this.onCardInputChange = this.onCardInputChange.bind(this)
     this.renderComplexity = this.renderComplexity.bind(this)
     this.onTextChange = this.onTextChange.bind(this)
     this.handleKeyCommand = this.handleKeyCommand.bind(this)
@@ -36,8 +37,33 @@ class Editor extends Component {
     }
   }
 
+  componentWillMount() {
+
+    if (this.props.currentCard.summary.length > 0) {
+      const contentState = convertFromRaw({
+        entityMap: {},
+        blocks: [
+          {
+            text: this.props.currentCard.summary,
+            key: this.props.currentCard.id,
+            type: 'unstyled',
+            entityRanges: [],
+          },
+        ],
+      })
+      this.setState({
+        editorState: DraftEditorState.createWithContent(contentState),
+        currentCard: this.props.currentCard
+      })
+    }
+  }
+
   onTextChange(editorState) {
-    this.setState({editorState})
+
+    const currentCard = this.state.currentCard
+    currentCard.summary = editorState.getCurrentContent().getPlainText()
+    
+    this.setState({ editorState, currentCard })
   }
 
 
@@ -73,6 +99,20 @@ class Editor extends Component {
     )
   }
 
+  onCardInputChange(event) {
+    const { currentCard } = this.state
+
+    if (event.target.name === 'assignee') {
+      currentCard.assignee.name = event.target.value
+    } else {
+      currentCard[event.target.name] = event.target.value
+    }
+
+    this.setState({
+      currentCard
+    })
+  }
+
   renderComplexity(complexItem) {
     const changeComplexity = (e) => {
       return this.props.changeComplexity(e,complexItem)
@@ -92,7 +132,7 @@ class Editor extends Component {
   render() {
 
     let hidePlaceholder = false
-    var contentState = this.state.editorState.getCurrentContent()
+    const contentState = this.state.editorState.getCurrentContent()
     if (!contentState.hasText()) {
       if (contentState.getBlockMap().first().getType() !== 'unstyled') {
         hidePlaceholder = true
@@ -110,15 +150,15 @@ class Editor extends Component {
             />  
           </div>  
           <div className='editor-header-container'>  
-            <div className='editor-back-title-button'>
+            <div className='editor-side-inputs-container'>
               <div className='editor-card-type-input'>
                 <label>
                   <input 
                     type="radio" 
                     name="type"   
                     value="userStory"
-                    checked={this.props.currentCard.type === 'userStory'}                
-                    onChange={this.props.onCardInputChange} />
+                    checked={this.state.currentCard.type === 'userStory'}                
+                    onChange={this.onCardInputChange} />
                   &nbsp;User Story  
                 </label>
                 <label>  
@@ -126,18 +166,35 @@ class Editor extends Component {
                     type="radio" 
                     name="type" 
                     value="bug"
-                    checked={this.props.currentCard.type === 'bug'}
-                    onChange={this.props.onCardInputChange} />
+                    checked={this.state.currentCard.type === 'bug'}
+                    onChange={this.onCardInputChange} />
                   &nbsp;Bug    
                 </label>  
+                <br/>
+                <label>
+                  assignee:&nbsp;
+                  <select
+                    name="assignee"
+                    value={this.state.currentCard.assignee.name}
+                    onChange={this.onCardInputChange}>
+                    {this.props.assignedProjectUsers.map((user, index) => {
+                        return (
+                          <option key={index} value={user.name}>
+                            {user.name}
+                          </option>  
+                        )
+                    })}
+                  </select>
+                </label>  
+                <br/>
               </div>  
             </div> 
             <div className='editor-title-input'>
               <input
-                onChange={this.props.onCardInputChange}
+                onChange={this.onCardInputChange}
                 name='title'
                 type='text'
-                value={this.props.currentCard.title}
+                value={this.state.currentCard.title}
               />  
             </div>  
               <div className='editor-title-number-container'> 
@@ -146,25 +203,19 @@ class Editor extends Component {
                     <input
                       type='button'
                       value='Update Card'
-                      onClick={this.props.onUpdateCard}
+                      onClick={() => this.props.onUpdateCard(this.state.currentCard)}
                     />  
                   </div>  
-                    {`# ${this.props.currentCard.cardNumber}`}  
+                    {`# ${this.state.currentCard.cardNumber}`}  
                 </div>  
-                <div>complexity: {this.props.currentCard.complexity}</div>
+                <div className='editor-main-complexity-container'>complexity: {this.state.currentCard.complexity}</div>
                   <div className='editor-card-complexity-container'>
                     {this.state.complexArr.map(this.renderComplexity)}
                   </div>
               </div>
-            </div>  
+          </div>  
           <div className='editor-card-summary-container'>
             Summary:
-            {/*false && <textarea
-              name='summary'
-              value={this.props.currentCard.summary}
-              onChange={this.props.onCardInputChange}
-            />*/}
-
             <div style={{ paddingTop: 15, paddingBottom: 5 }}>
               <div>
                 <BlockStyleControls

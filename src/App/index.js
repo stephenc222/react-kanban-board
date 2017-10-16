@@ -13,7 +13,6 @@ class App extends Component {
     this.onBoardControlChange = this.onBoardControlChange.bind(this)
     this.onBoardSearchReset = this.onBoardSearchReset.bind(this)
     this.changeComplexity = this.changeComplexity.bind(this)
-    this.onCardInputChange = this.onCardInputChange.bind(this)
     this.onUpdateCard = this.onUpdateCard.bind(this)
     this.showBoard = this.showBoard.bind(this)
     this.addCard = this.addCard.bind(this)
@@ -23,6 +22,17 @@ class App extends Component {
 
     this.state = {
       projectTitle: 'Your Project Title',
+      assignedProjectUsers: [
+        {
+          name: 'stephen',
+        },
+        {
+          name: 'billy'
+        },
+        {
+          name: 'susan'
+        }
+      ],
       filteredCardLanes: [],
       lanes: [
         {
@@ -49,6 +59,7 @@ class App extends Component {
       currentCard: {
         id: RandomID(),
         title: '',
+        assignee: {},
         summary: ''
       },
       boardControls: {
@@ -65,6 +76,9 @@ class App extends Component {
     const dummyPlannedCards = [
       {
         type: 'userStory',
+        assignee: {
+          name: 'stephen'
+        },
         complexity: 2,        
         id: RandomID(),
         cardNumber: 100,
@@ -72,7 +86,10 @@ class App extends Component {
         summary: 'summary for planned card 1'
       },
       {
-        type: 'userStory',        
+        type: 'userStory',   
+        assignee: {
+          name: 'stephen'
+        },
         complexity: 1,        
         id: RandomID(),
         cardNumber: 101,        
@@ -83,7 +100,10 @@ class App extends Component {
 
     const dummyInDevCards = [
       {
-        type: 'userStory',    
+        type: 'userStory',  
+        assignee: {
+          name: 'susan'
+        },
         complexity: 3,        
         id: RandomID(),   
         cardNumber: 102,        
@@ -91,7 +111,10 @@ class App extends Component {
         summary: 'summary for in dev card 1'
       },
       {
-        type: 'bug',       
+        type: 'bug',    
+        assignee: {
+          name: 'stephen'
+        },
         complexity: 4,        
         id: RandomID(),        
         cardNumber: 103,        
@@ -99,7 +122,10 @@ class App extends Component {
         summary: 'summary for in dev card 2'
       },
       {
-        type: 'userStory',    
+        type: 'userStory',   
+        assignee: {
+          name: 'billy'
+        },
         complexity: 5,        
         id: RandomID(),        
         cardNumber: 104,        
@@ -110,7 +136,10 @@ class App extends Component {
 
     const dummyInTestingCards = [
       {
-        type: 'userStory',   
+        type: 'userStory', 
+        assignee: {
+          name: 'stephen'
+        },
         complexity: 2,        
         id: RandomID(),      
         cardNumber: 105,        
@@ -119,6 +148,9 @@ class App extends Component {
       },
       {
         type: 'bug',    
+        assignee: {
+          name: 'stephen'
+        },
         complexity: 1,        
         id: RandomID(),   
         cardNumber: 106,        
@@ -130,6 +162,9 @@ class App extends Component {
     const dummyInDone = [
       {
         type: 'userStory',  
+        assignee: {
+          name: 'susan'
+        },
         complexity: 1,
         id: RandomID(),  
         cardNumber: 107,        
@@ -137,7 +172,10 @@ class App extends Component {
         summary: 'summary for in done card 1'
       },
       {
-        type: 'bug',   
+        type: 'bug',  
+        assignee: {
+          name: 'billy'
+        },
         complexity: 3,        
         id: RandomID(),        
         cardNumber: 108,        
@@ -229,16 +267,6 @@ class App extends Component {
     })
   }
 
-  onCardInputChange(event) {
-    const { currentCard } = this.state
-
-    currentCard[event.target.name] = event.target.value
-
-    this.setState({
-      currentCard
-    })
-  }
-
   addCard() {
     // just defaults to adding a new card in 'planned'
 
@@ -248,11 +276,10 @@ class App extends Component {
     // remove card
   }
 
-  onUpdateCard() {
+  onUpdateCard(currentCard) {
     const {
       laneIndex,
       cardIndex,
-      currentCard,
       lanes
     } = this.state
 
@@ -340,6 +367,7 @@ class App extends Component {
             this.state.showEditor
             ? (
                 <Editor
+                  assignedProjectUsers={this.state.assignedProjectUsers}  
                   changeComplexity={this.changeComplexity}  
                   showBoard={this.showBoard}  
                   cardIndex={this.state.cardIndex}
@@ -348,7 +376,6 @@ class App extends Component {
                   currentCard={this.state.currentCard}
                   removeCard={this.removeCard}
                   onUpdateCard={this.onUpdateCard}
-                  onCardInputChange={this.onCardInputChange}
                 />
               )
             : (

@@ -6,6 +6,8 @@
 
 .editor-back-button {
   padding-bottom: 25px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 .editor-content-container {
@@ -23,34 +25,47 @@
   width: 100%;
 }
 
+.editor-side-inputs-container {
+  display: flex;
+  padding: 5px;
+}
+
 .editor-card-type-input {
   display: flex;
   flex-direction: column;
 }
 
+.editor-main-complexity-container {
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-content: flex-end;
+}
 .editor-card-complexity-container {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  
 }
 
 .editor-card-complexity-item {
   border: 1px solid black;
   background: white;
   margin: 3px;  
-  min-height: 20px;
-  min-width: 20px;
+  min-height: 15px;
+  min-width: 15px;
   border-radius: 50%;  
-  flex-grow: 1;  
+  /* flex-grow: 1;   */
 }
 
 .editor-card-complexity-item--selected {
   border: 1px solid black;
   background: gold;
   margin: 3px;
-  min-height: 20px;
-  min-width: 20px;
+  min-height: 15px;
+  min-width: 15px;
   border-radius: 50%;
-  flex-grow: 1;  
+  /* flex-grow: 1;   */
 }
 
 .editor-title-number-container {

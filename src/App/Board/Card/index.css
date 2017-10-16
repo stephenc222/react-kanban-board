@@ -21,17 +21,25 @@
   padding: 5px;
 }
 
+.card-top-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .card-complexity-container {
   display: flex;
   flex-direction: row;
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }
 
 .card-complexity-item {
   background: transparent;
   margin: 1px;  
   min-height: 5px;
+  max-height: 5px;
   min-width: 5px;
+  max-width: 5px;
   border-radius: 50%;  
 }
 
@@ -40,11 +48,13 @@
   background: gold;
   margin: 1px;
   min-height: 5px;
+  max-height: 5px;
   min-width: 5px;
+  max-width: 5px;
   border-radius: 50%;
 }
 
-.card-title-number-container {
+.card-title-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -52,4 +62,10 @@
 
 .card-number {
   font-weight: bold;  
+}
+
+.card-assignee {
+  display: flex;
+  padding-top: 5px;
+  justify-content: flex-end;
 }
