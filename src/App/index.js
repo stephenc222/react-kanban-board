@@ -251,7 +251,17 @@ class App extends Component {
           return filteredLane
         }))
       } else {
-        // TODO: search through card type and summary
+        filteredCardLanes = [].concat(lanes.map(lane => {
+          const filteredLane = {
+            laneTitle: lane.laneTitle,
+            cards: []
+          }
+          filteredLane.cards = lane.cards.filter(card => {
+            const searchMatch = new RegExp(searchValue, 'g')
+            return searchMatch.exec(card.title) || searchMatch.exec(card.summary)
+          })
+          return filteredLane
+        }))
       }
     }
 
