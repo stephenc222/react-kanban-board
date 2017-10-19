@@ -4,6 +4,7 @@ import RandomID from 'random-id'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Board from './Board'
 import Editor from './Editor'
+import { LinkButton } from '../Components'
 import './index.css'
 
 class Project extends Component {
@@ -369,10 +370,14 @@ class Project extends Component {
   render() {
     return (
       <div className="project">
-      <div className='project-main-container'>
-        <header className="project-header">
-          {this.state.projectTitle}
-        </header>
+        <div className='project-main-container'>
+          <header className="project-header">
+            {this.state.projectTitle}
+          </header>
+          <LinkButton
+            routerPath={'/'}  
+            label={'Home'}
+          />
           {
             this.state.showEditor
             ? (
