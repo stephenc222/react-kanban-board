@@ -102,11 +102,7 @@ class Editor extends Component {
   onCardInputChange(event) {
     const { currentCard } = this.state
 
-    if (event.target.name === 'assignee') {
-      currentCard.assignee.name = event.target.value
-    } else {
-      currentCard[event.target.name] = event.target.value
-    }
+    currentCard[event.target.name] = event.target.value
 
     this.setState({
       currentCard
@@ -169,22 +165,6 @@ class Editor extends Component {
                     checked={this.state.currentCard.type === 'bug'}
                     onChange={this.onCardInputChange} />
                   &nbsp;Bug    
-                </label>  
-                <br/>
-                <label>
-                  assignee:&nbsp;
-                  <select
-                    name="assignee"
-                    value={this.state.currentCard.assignee.name}
-                    onChange={this.onCardInputChange}>
-                    {this.props.assignedProjectUsers.map((user, index) => {
-                        return (
-                          <option key={index} value={user.name}>
-                            {user.name}
-                          </option>  
-                        )
-                    })}
-                  </select>
                 </label>  
                 <br/>
               </div>  

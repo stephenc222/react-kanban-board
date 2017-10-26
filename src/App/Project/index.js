@@ -23,17 +23,6 @@ class Project extends Component {
 
     this.state = {
       projectTitle: 'Your Project Title',
-      assignedProjectUsers: [
-        {
-          name: 'stephen',
-        },
-        {
-          name: 'billy'
-        },
-        {
-          name: 'susan'
-        }
-      ],
       filteredCardLanes: [],
       lanes: [
         {
@@ -77,9 +66,6 @@ class Project extends Component {
     const dummyPlannedCards = [
       {
         type: 'userStory',
-        assignee: {
-          name: 'stephen'
-        },
         complexity: 2,        
         id: RandomID(),
         cardNumber: 100,
@@ -88,9 +74,6 @@ class Project extends Component {
       },
       {
         type: 'userStory',   
-        assignee: {
-          name: 'stephen'
-        },
         complexity: 1,        
         id: RandomID(),
         cardNumber: 101,        
@@ -102,9 +85,6 @@ class Project extends Component {
     const dummyInDevCards = [
       {
         type: 'userStory',  
-        assignee: {
-          name: 'susan'
-        },
         complexity: 3,        
         id: RandomID(),   
         cardNumber: 102,        
@@ -113,9 +93,6 @@ class Project extends Component {
       },
       {
         type: 'bug',    
-        assignee: {
-          name: 'stephen'
-        },
         complexity: 4,        
         id: RandomID(),        
         cardNumber: 103,        
@@ -124,9 +101,6 @@ class Project extends Component {
       },
       {
         type: 'userStory',   
-        assignee: {
-          name: 'billy'
-        },
         complexity: 5,        
         id: RandomID(),        
         cardNumber: 104,        
@@ -138,20 +112,15 @@ class Project extends Component {
     const dummyInTestingCards = [
       {
         type: 'userStory', 
-        assignee: {
-          name: 'stephen'
-        },
         complexity: 2,        
         id: RandomID(),      
         cardNumber: 105,        
         title: 'in testing card 1',
-        summary: 'summary for in testing card 1'
+        summary: 'summary for in testing card 1',
+        files: []
       },
       {
         type: 'bug',    
-        assignee: {
-          name: 'stephen'
-        },
         complexity: 1,        
         id: RandomID(),   
         cardNumber: 106,        
@@ -163,9 +132,6 @@ class Project extends Component {
     const dummyInDone = [
       {
         type: 'userStory',  
-        assignee: {
-          name: 'susan'
-        },
         complexity: 1,
         id: RandomID(),  
         cardNumber: 107,        
@@ -174,9 +140,6 @@ class Project extends Component {
       },
       {
         type: 'bug',  
-        assignee: {
-          name: 'billy'
-        },
         complexity: 3,        
         id: RandomID(),        
         cardNumber: 108,        

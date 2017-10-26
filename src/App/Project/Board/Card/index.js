@@ -95,7 +95,6 @@ const Card = (props) => {
           <div className='card-title'>{props.cardData.title}</div>
         </div>  
         <div className='card-summary'>{props.cardData.summary}</div>
-        <div className='card-assignee'>{props.cardData.assignee.name}</div>
       </div>
     )
   )
