@@ -1,6 +1,6 @@
 import RandomID from 'random-id'
 // import projectTemplate from './projectTemplate'
-import userTemplate from './userTemplate'
+// import userTemplate from './userTemplate'
 
 /**
  * Object Stores:
@@ -106,14 +106,20 @@ const Api = {
   },
 
   // username and rest of profile will be entered by user
-  createUser({ username = 'billy' }, onError, onSuccess) {
+  createUser({ username, email }, onError, onSuccess) {
     Api._openRequest((db, store) => {
       // getUser here
       // get all documents in store
-      const userProfile = { ...userTemplate }
 
-      userProfile._id = RandomID()
-      userProfile.username = username
+      if (!username || !email) {
+        throw new Error('no username or email entered')
+      }
+
+      const userProfile = {
+        _id: RandomID(),
+        username,
+        email
+      }
       
       const createUserRequest =  store.add(userProfile)
 
@@ -125,7 +131,6 @@ const Api = {
     // assumes the desired user is the one with *this* browser
     // var transaction = db.transaction(['user'], 'readwrite');
     // var store = transaction.objectStore('user');
-    console.log('getUser')
     Api._openRequest((db, store) => {
       // getUser here
       // get all documents in store

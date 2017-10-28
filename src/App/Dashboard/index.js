@@ -8,8 +8,11 @@ class Dashboard extends Component {
         <h3>Dashboard</h3>
         <LinkButton
           label='Project'
-          routerPath='/project'
+          routerPath='/1234/project'
         />
+        <div>
+          <pre>{JSON.stringify(this.props, null, 2)}</pre>  
+        </div>  
       </div>
     )
   }
