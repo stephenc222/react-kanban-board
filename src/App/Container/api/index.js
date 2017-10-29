@@ -1,5 +1,5 @@
 import RandomID from 'random-id'
-// import projectTemplate from './projectTemplate'
+import projectTemplate from './projectTemplate'
 // import userTemplate from './userTemplate'
 
 /**
@@ -77,10 +77,10 @@ const Api = {
 
   _openRequest(action, storeName = 'user') {
     // initialize transaction with opening of request
+    console.warn('_openRequest:', {storeName})
     const openRequest = indexedDB.open('react-kanban-board', 1)
     openRequest.onupgradeneeded = function(e) {
       this.db = e.target.result
-      console.log('running onupgradeneeded')
       if (!this.db.objectStoreNames.contains(storeName)) {
         this.db.createObjectStore(storeName, {keyPath: '_id'})
       }
@@ -105,7 +105,6 @@ const Api = {
     }
   },
 
-  // username and rest of profile will be entered by user
   createUser({ username, email }, onError, onSuccess) {
     Api._openRequest((db, store) => {
       // getUser here
@@ -118,14 +117,16 @@ const Api = {
       const userProfile = {
         _id: RandomID(),
         username,
-        email
+        email,
+        created: new Date().getTime(),
+        projects: []
       }
       
       const createUserRequest =  store.add(userProfile)
 
       createUserRequest.onerror = onError
       createUserRequest.onsuccess = onSuccess
-    },)
+    })
   },
   getUser(onError, onSuccess) {
     // assumes the desired user is the one with *this* browser
@@ -143,14 +144,14 @@ const Api = {
   },
 
   // manage the user object in state, then call this with it
-  updateUser(userObject, onError, onSuccess) {
+  updateUser(userProfile, onError, onSuccess) {
     console.log('updateUser')
     Api._openRequest((db, store) => {
 
-      if (!userObject) {
+      if (!userProfile) {
         return undefined
       }
-      const updateUserReqeust = store.put(userObject)
+      const updateUserReqeust = store.put(userProfile)
       // store.put(item);
 
       updateUserReqeust.onerror = onError
@@ -177,10 +178,14 @@ const Api = {
     Api._openRequest((db, store) => {
       // getUser here
       // get all documents in store
-      const getAllReqeust = store.getAll()
+      const nextProject = projectTemplate
 
-      getAllReqeust.onerror = onError
-      getAllReqeust.onsuccess = onSuccess
+      nextProject._id = RandomID()
+
+      const createUserProjectRequest = store.add(nextProject)
+
+      createUserProjectRequest.onerror = onError
+      createUserProjectRequest.onsuccess = onSuccess
     }, 'projects')
   },
 
