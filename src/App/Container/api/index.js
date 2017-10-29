@@ -81,17 +81,22 @@ const Api = {
     const openRequest = indexedDB.open('react-kanban-board', 1)
     openRequest.onupgradeneeded = function(e) {
       this.db = e.target.result
-      if (!this.db.objectStoreNames.contains(storeName)) {
-        this.db.createObjectStore(storeName, {keyPath: '_id'})
+      // adding tables of 'user', 'projects', 'files'
+      if (!this.db.objectStoreNames.contains('user')) {
+        this.db.createObjectStore('user', {keyPath: '_id'})
+      }
+      if (!this.db.objectStoreNames.contains('projects')) {
+        this.db.createObjectStore('projects', {keyPath: '_id'})
+      }
+      if (!this.db.objectStoreNames.contains('files')) {
+        this.db.createObjectStore('files', {keyPath: '_id'})
       }
     }
-    openRequest.onsuccess = function(e) {
+    openRequest.onsuccess = function (e) {
+      // assumes the requisite stores exist here
       return new Promise((resolve, reject) => {
         this.db = e.target.result
-        if (!this.db.objectStoreNames.contains(storeName)) {
-          this.db.createObjectStore(storeName, {keyPath: '_id'})
-        }
-        const transaction = this.db.transaction([storeName], 'readwrite')
+        const transaction = this.db.transaction(storeName, 'readwrite')
         const store = transaction.objectStore(storeName)
         // API CRUD-style action here
         resolve(action(this.db, store))
@@ -126,7 +131,7 @@ const Api = {
 
       createUserRequest.onerror = onError
       createUserRequest.onsuccess = onSuccess
-    })
+    }, 'user')
   },
   getUser(onError, onSuccess) {
     // assumes the desired user is the one with *this* browser
@@ -139,7 +144,7 @@ const Api = {
 
       getAllRequest.onerror = onError
       getAllRequest.onsuccess = onSuccess
-    })
+    }, 'user')
 
   },
 
@@ -156,7 +161,7 @@ const Api = {
 
       updateUserReqeust.onerror = onError
       updateUserReqeust.onsuccess = onSuccess
-    })
+    }, 'user')
   },
 
   deleteUser({ _id }, onError, onSuccess) {
@@ -168,7 +173,7 @@ const Api = {
 
       getAllReqeust.onerror = onError
       getAllReqeust.onsuccess = onSuccess
-    })
+    }, 'user')
 
   },
 
@@ -178,7 +183,7 @@ const Api = {
     Api._openRequest((db, store) => {
       // getUser here
       // get all documents in store
-      const nextProject = projectTemplate
+      const nextProject = { ...projectTemplate }
 
       nextProject._id = RandomID()
 
