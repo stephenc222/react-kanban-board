@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import RandomID from 'random-id'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import Project from '../Project'
+import ProjectEditor from '../ProjectEditor'
 import Welcome from '../Welcome'
 import Dashboard from '../Dashboard'
 import api from './api'
@@ -15,7 +17,7 @@ class Container extends Component {
     this.onCreateUserError = this.onCreateUserError.bind(this)
     this.onCreateUserSuccess = this.onCreateUserSuccess.bind(this)
     
-    this.createUserProject = this.createUserProject.bind(this)
+    this.addNewProject = this.addNewProject.bind(this)
     this.onCreateUserProjectSuccess = this.onCreateUserProjectSuccess.bind(this)
     this.onCreateUserProjectError = this.onCreateUserProjectError.bind(this)
     
@@ -74,11 +76,10 @@ class Container extends Component {
     )
   }
 
-  createUserProject() {
-    api.createUserProject(
-      this.onCreateUserProjectError,
-      this.onCreateUserProjectSuccess
-    )
+  addNewProject() {
+    this.setState({
+      masterPath: `${this.state.masterPath}/create-project/${RandomID()}`
+    })
   }
 
   onCreateUserProjectError(e) {
@@ -112,16 +113,21 @@ class Container extends Component {
         <Route exact path={'/:userId'} component={() => {
           return (
             <Dashboard
-              createUserProject={this.createUserProject}  
               userProfile={this.state.userProfile}  
+              addNewProject={this.addNewProject}
             />
           )
-        }}/>
-        <Route exact path={'/:userId/:projectId'} component={() => {
+        }} />
+        <Route exact path={'/:userId/create-project/:projectId'} component={() => {
+          return (
+            <ProjectEditor/>
+          )
+        }} />
+        <Route exact path={'/:userId/project-board/:projectId'} component={() => {
           return (
             <Project/>
           )
-        }}/>  
+        }} />  
       </div>  
     )
   }

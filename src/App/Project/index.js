@@ -3,7 +3,7 @@ import { DragDropContext } from 'react-dnd'
 import RandomID from 'random-id'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Board from './Board'
-import Editor from './Editor'
+import CardEditor from './CardEditor'
 import { LinkButton } from '../Components'
 import './index.css'
 
@@ -344,7 +344,7 @@ class Project extends Component {
           {
             this.state.showEditor
             ? (
-                <Editor
+                <CardEditor
                   assignedProjectUsers={this.state.assignedProjectUsers}  
                   changeComplexity={this.changeComplexity}  
                   showBoard={this.showBoard}  

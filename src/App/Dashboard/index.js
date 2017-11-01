@@ -8,7 +8,7 @@ class Dashboard extends Component {
         <div>
           <input
             type='button'
-            onClick={this.props.createUserProject}
+            onClick={this.props.addNewProject}
             value='New Project' />
         </div>
         <div>

@@ -19,7 +19,7 @@ const styleMap = {
     padding: 2,
   },
 }
-class Editor extends Component {
+class CardEditor extends Component {
 
   constructor(props) {
     super(props) 
@@ -225,4 +225,4 @@ class Editor extends Component {
   }
 }
 
-export default Editor
+export default CardEditor
