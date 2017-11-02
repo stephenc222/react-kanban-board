@@ -1,0 +1,4 @@
+.project-editor-view__container {
+  display: flex;
+  flex-direction: column;
+}

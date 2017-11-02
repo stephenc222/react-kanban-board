@@ -20,9 +20,14 @@ class Container extends Component {
     this.addNewProject = this.addNewProject.bind(this)
     this.onCreateUserProjectSuccess = this.onCreateUserProjectSuccess.bind(this)
     this.onCreateUserProjectError = this.onCreateUserProjectError.bind(this)
+    this.onGetUserProjectSuccess = this.onGetUserProjectSuccess.bind(this)
+    this.onGetUserProjectError = this.onGetUserProjectError.bind(this)
+
+    this.goToProject = this.goToProject.bind(this)
     
     this.state = {
       userProfile: undefined,
+      nextProject: {},
       masterPath: '/'
     }
   }
@@ -41,11 +46,9 @@ class Container extends Component {
     })
   }
 
-
   onCreateUserError(e) {
     console.log('onCreateError', {e})
   }
-
 
   onGetUserError(e) {
     console.log('onGetError:', { e })
@@ -77,21 +80,67 @@ class Container extends Component {
   }
 
   addNewProject() {
-    this.setState({
-      masterPath: `${this.state.masterPath}/create-project/${RandomID()}`
-    })
+    const { _id } = {...this.state.userProfile}
+    const nextProjectId = RandomID()
+    api.createUserProject({
+      nextProjectId,
+      userId: _id
+    }, this.onCreateUserProjectError, this.onCreateUserProjectSuccess)
   }
 
   onCreateUserProjectError(e) {
     console.error('onCreateUserProjectError', {e})
   }
-
+  
   onCreateUserProjectSuccess(e) {
     console.log('onCreateUserProjectSuccess', {e})
+    const nextProjectId = e.target.result
+
+    this.setState({ nextProjectId }, () => {   
+      api.getUserProject({
+        projectId: nextProjectId
+      }, this.onGetUserProjectError, this.onGetUserProjectSuccess)
+    })
+
   }
 
+  onGetUserProjectSuccess(e) {
+    console.log('onGetUserProjectSuccess', { e })
+    const nextProjectId = this.state.nextProjectId
+    const nextProject = e.target.result
+    const userProfile = this.state.userProfile
 
-  
+    userProfile.projects.push(nextProjectId)
+    this.setState({
+      nextProject,
+      userProfile,
+      masterPath: `${this.state.masterPath}/create-project/${nextProjectId}`,
+    }, () => {
+      api.updateUser({
+        userProfile,
+      }, this.onUpdateUserProfileError, this.onUpdateUserProfileSuccess  )
+    })
+
+  }
+
+  goToProject({ projectId }) {
+    this.setState({
+      masterPath: `${this.state.userProfile._id}/project-board/${projectId}`
+    })
+  }
+
+  onUpdateUserProfileError(e) {
+    console.error('onUpdateUserProfileError', {e})
+  }
+
+  onUpdateUserProfileSuccess(e) {
+    console.log('onUpdateUserProfileSuccess', {e})
+  }
+
+  onGetUserProjectError(e) {
+    console.error('onGetUserProjectError', {e})
+  }
+
   render() {
 
     if (this.state.masterPath !== this.props.history.location.pathname) {
@@ -115,12 +164,16 @@ class Container extends Component {
             <Dashboard
               userProfile={this.state.userProfile}  
               addNewProject={this.addNewProject}
+              goToProject={this.goToProject}
             />
           )
         }} />
         <Route exact path={'/:userId/create-project/:projectId'} component={() => {
           return (
-            <ProjectEditor/>
+            <ProjectEditor
+              nextProject={this.state.nextProject}
+              goToProject={this.goToProject}              
+            />
           )
         }} />
         <Route exact path={'/:userId/project-board/:projectId'} component={() => {

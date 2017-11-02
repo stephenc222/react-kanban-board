@@ -149,7 +149,7 @@ const Api = {
   },
 
   // manage the user object in state, then call this with it
-  updateUser(userProfile, onError, onSuccess) {
+  updateUser({ userProfile }, onError, onSuccess) {
     console.log('updateUser')
     Api._openRequest((db, store) => {
 
@@ -177,7 +177,7 @@ const Api = {
 
   },
 
-  createUserProject(onError, onSuccess) {
+  createUserProject({ nextProjectId, userId }, onError, onSuccess) {
     // TODO: work on a subset of the project data of a user document...
     console.log('createNewUserProject')
     Api._openRequest((db, store) => {
@@ -185,7 +185,8 @@ const Api = {
       // get all documents in store
       const nextProject = { ...projectTemplate }
 
-      nextProject._id = RandomID()
+      nextProject._id = nextProjectId
+      nextProject.userId = userId
 
       const createUserProjectRequest = store.add(nextProject)
 
@@ -194,13 +195,14 @@ const Api = {
     }, 'projects')
   },
 
-  getUserProject(onError, onSuccess) {
+  getUserProject({ projectId },onError, onSuccess) {
     // TODO: work on a subset of the project data of a user document...
     console.log('getUserProject')
     Api._openRequest((db, store) => {
       // getUser here
       // get all documents in store
-      const getAllReqeust = store.getAll()
+      const _id = projectId
+      const getAllReqeust = store.get(_id)
 
       getAllReqeust.onerror = onError
       getAllReqeust.onsuccess = onSuccess
@@ -238,7 +240,5 @@ const Api = {
 }
 
 const api = Api._init()
-// for testing
-window.api = api
 
 export default api
