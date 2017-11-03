@@ -4,36 +4,54 @@ class ProjectEditor extends Component {
   constructor(props) {
     super(props)
     this.onProjectTitleChange = this.onProjectTitleChange.bind(this)
+    this.goToProject = this.goToProject.bind(this)
     this.state = {
       nextProject: {},
       projectTitle: ''
     }
   }
 
+  componentDidMount() {
+    this.setState({nextProject: this.props.nextProject})
+  }
+
   onProjectTitleChange(e) {
-    this.setState({projectTitle: e.target.value })
+    const nextProject = this.state.nextProject
+    nextProject.projectTitle = e.target.value
+    const projectTitle = e.target.value
+    this.setState({ nextProject, projectTitle })
   }
 
-  addLane() {
-    // TODO: adds a lane
+  addLane(e) {
+    // TODO: adds a lane, but first reveals a text input for naming the lane
+    console.warn('addLane')
   }
 
-  removeLane() {
+  removeLane(e, lane, index) {
     // TODO: removes a lane
+    console.warn('removeLane:', {lane, index})
   }
 
   goToProject() {
     const projectId = this.state.nextProject._id
-    this.props.goToProject({ projectId })
+    const nextProject = this.state.nextProject
+    console.log('in Editor:', { projectId, nextProject })
+    this.props.goToProject({ projectId, currentProject: nextProject })
   }
 
-  render () {
+  render() {
+    console.log(this.props)
+    if (!this.state.nextProject.lanes) { 
+      return (<div>setting up project editor...</div>)
+    }
     return (
       <ProjectEditorView
         nextProject={this.state.nextProject}
-        projectTitle={this.state.projectTitle}
+        goToProject={this.goToProject}
         onProjectTitleChange={this.onProjectTitleChange}
-        {...this.props}  
+        projectTitle={this.state.projectTitle}
+        addLane={this.addLane}
+        removeLane={this.removeLane}
       />
     )
   }

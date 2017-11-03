@@ -7,7 +7,7 @@ import Welcome from '../Welcome'
 import Dashboard from '../Dashboard'
 import api from './api'
 
-class Container extends Component {
+class MasterContainer extends Component {
   constructor(props) {
     super(props)
     this.onGetUserSuccess = this.onGetUserSuccess.bind(this)
@@ -28,6 +28,7 @@ class Container extends Component {
     this.state = {
       userProfile: undefined,
       nextProject: {},
+      currentProject: {},
       masterPath: '/'
     }
   }
@@ -68,6 +69,10 @@ class Container extends Component {
   }
   
   componentDidMount() {
+    if (!api) {
+      window.alert('Your browser does not support IndexedDB. So get a newer one!')
+      return
+    }
     api.getUser(this.onGetUserError, this.onGetUserSuccess)
   }
 
@@ -111,6 +116,7 @@ class Container extends Component {
     const userProfile = this.state.userProfile
 
     userProfile.projects.push(nextProjectId)
+
     this.setState({
       nextProject,
       userProfile,
@@ -123,9 +129,10 @@ class Container extends Component {
 
   }
 
-  goToProject({ projectId }) {
+  goToProject({ projectId, currentProject }) {
     this.setState({
-      masterPath: `${this.state.userProfile._id}/project-board/${projectId}`
+      masterPath: `/${this.state.userProfile._id}/project-board/${projectId}`,
+      currentProject
     })
   }
 
@@ -142,6 +149,8 @@ class Container extends Component {
   }
 
   render() {
+
+    console.log(this.props)
 
     if (this.state.masterPath !== this.props.history.location.pathname) {
       return (
@@ -178,7 +187,9 @@ class Container extends Component {
         }} />
         <Route exact path={'/:userId/project-board/:projectId'} component={() => {
           return (
-            <Project/>
+            <Project
+              currentProject={this.state.currentProject}
+            />
           )
         }} />  
       </div>  
@@ -186,4 +197,4 @@ class Container extends Component {
   }
 }
 
-export default withRouter(Container)
+export default withRouter(MasterContainer)

@@ -1,5 +1,5 @@
 import React from 'react'
-import Container from './Container'
+import MasterContainer from './MasterContainer'
 import {
   BrowserRouter as Router,
 } from 'react-router-dom'
@@ -7,7 +7,7 @@ import {
 const App = () => {
   return (
     <Router>
-      <Container/>    
+      <MasterContainer/>    
     </Router>
   )
 }
