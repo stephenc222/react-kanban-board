@@ -4,7 +4,6 @@ import RandomID from 'random-id'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Board from './Board'
 import CardEditor from './CardEditor'
-import { LinkButton } from '../Components'
 import './index.css'
 
 class Project extends Component {
@@ -57,6 +56,10 @@ class Project extends Component {
         searchValue: ''
       }
     }
+  }
+
+  componentDidMount() {
+    this.setState({...this.props.currentProject})
   }
 
   componentWillMount() {
@@ -337,10 +340,6 @@ class Project extends Component {
           <header className="project-header">
             {this.state.projectTitle}
           </header>
-          <LinkButton
-            routerPath={'/'}  
-            label={'Home'}
-          />
           {
             this.state.showEditor
             ? (
@@ -354,10 +353,11 @@ class Project extends Component {
                   currentCard={this.state.currentCard}
                   removeCard={this.removeCard}
                   onUpdateCard={this.onUpdateCard}
-                />
-              )
+                  />
+                )
             : (
                 <Board
+                  goToDashBoard={this.props.goToDashBoard}
                   onBoardSearchReset={this.onBoardSearchReset}  
                   boardControls={this.state.boardControls}
                   onBoardControlChange={this.onBoardControlChange}

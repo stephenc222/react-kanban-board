@@ -19,6 +19,13 @@ const Board = (props) => {
   return (
     <div className='board-main-container'>
       <div className='board-controls-container'>
+        <div>
+          <input
+            onClick={props.goToDashBoard}
+            type='button'
+            value='Back to Dashboard'
+          />
+        </div>    
         <div className='board-controls--sort-control'>
           Sort By:&nbsp;
           <label>  

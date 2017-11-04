@@ -23,7 +23,9 @@ class MasterContainer extends Component {
     this.onGetUserProjectSuccess = this.onGetUserProjectSuccess.bind(this)
     this.onGetUserProjectError = this.onGetUserProjectError.bind(this)
 
+    // navigation
     this.goToProject = this.goToProject.bind(this)
+    this.goToDashBoard = this.goToDashBoard.bind(this)
     
     this.state = {
       userProfile: undefined,
@@ -136,6 +138,12 @@ class MasterContainer extends Component {
     })
   }
 
+  goToDashBoard() {
+    this.setState({
+      masterPath: `/${this.state.userProfile._id}`
+    })
+  }
+
   onUpdateUserProfileError(e) {
     console.error('onUpdateUserProfileError', {e})
   }
@@ -189,6 +197,7 @@ class MasterContainer extends Component {
           return (
             <Project
               currentProject={this.state.currentProject}
+              goToDashBoard={this.goToDashBoard}
             />
           )
         }} />  

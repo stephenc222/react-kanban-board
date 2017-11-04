@@ -35,12 +35,10 @@ class ProjectEditor extends Component {
   goToProject() {
     const projectId = this.state.nextProject._id
     const nextProject = this.state.nextProject
-    console.log('in Editor:', { projectId, nextProject })
     this.props.goToProject({ projectId, currentProject: nextProject })
   }
 
   render() {
-    console.log(this.props)
     if (!this.state.nextProject.lanes) { 
       return (<div>setting up project editor...</div>)
     }
