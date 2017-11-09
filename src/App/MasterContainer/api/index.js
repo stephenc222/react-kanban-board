@@ -83,7 +83,8 @@ const Api = {
       this.db = e.target.result
       // adding tables of 'user', 'projects', 'files'
       if (!this.db.objectStoreNames.contains('user')) {
-        this.db.createObjectStore('user', {keyPath: '_id'})
+        this.db.createObjectStore('user', { keyPath: '_id' })
+        
       }
       if (!this.db.objectStoreNames.contains('projects')) {
         this.db.createObjectStore('projects', {keyPath: '_id'})
@@ -156,11 +157,11 @@ const Api = {
       if (!userProfile) {
         return undefined
       }
-      const updateUserReqeust = store.put(userProfile)
+      const updateUserRequest = store.put(userProfile)
       // store.put(item);
 
-      updateUserReqeust.onerror = onError
-      updateUserReqeust.onsuccess = onSuccess
+      updateUserRequest.onerror = onError
+      updateUserRequest.onsuccess = onSuccess
     }, 'user')
   },
 
@@ -169,10 +170,10 @@ const Api = {
     Api._openRequest((db, store) => {
       // getUser here
       // get all documents in store
-      const getAllReqeust = store.delete(_id)
+      const getAllRequest = store.delete(_id)
 
-      getAllReqeust.onerror = onError
-      getAllReqeust.onsuccess = onSuccess
+      getAllRequest.onerror = onError
+      getAllRequest.onsuccess = onSuccess
     }, 'user')
 
   },
@@ -202,15 +203,31 @@ const Api = {
       // getUser here
       // get all documents in store
       const _id = projectId
-      const getAllReqeust = store.get(_id)
+      const getAllRequest = store.get(_id)
 
-      getAllReqeust.onerror = onError
-      getAllReqeust.onsuccess = onSuccess
+      getAllRequest.onerror = onError
+      getAllRequest.onsuccess = onSuccess
     }, 'projects')
   },
 
-  getAllUserProjects({ projectIds }) {
-    // TODO: *probably* need to work with cursors here...
+  getAllUserProjects({ userId }) {
+
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+        const getAllRequest = store.getAll()
+        getAllRequest.onsuccess = (e) => {
+          const projectsStore = e.target.result
+          const userProjects = projectsStore.filter(project => project.userId === userId)
+          resolve(userProjects)
+        }
+
+        getAllRequest.onerror = (e) => {
+          if (e) {
+            reject(e)
+          }
+        }
+      }, 'projects')
+    })
   },
   
 
@@ -221,10 +238,10 @@ const Api = {
       // getUser here
       // get all documents in store
       const data = {}
-      const getAllReqeust = store.put(data, _id)
+      const getAllRequest = store.put(data, _id)
 
-      getAllReqeust.onerror = onError
-      getAllReqeust.onsuccess = onSuccess
+      getAllRequest.onerror = onError
+      getAllRequest.onsuccess = onSuccess
     }, 'projects')
   },
 
@@ -235,10 +252,10 @@ const Api = {
     Api._openRequest((db, store) => {
       // getUser here
       // get all documents in store
-      const getAllReqeust = store.delete(_id)
+      const getAllRequest = store.delete(_id)
 
-      getAllReqeust.onerror = onError
-      getAllReqeust.onsuccess = onSuccess
+      getAllRequest.onerror = onError
+      getAllRequest.onsuccess = onSuccess
     }, 'projects')
   }
 }

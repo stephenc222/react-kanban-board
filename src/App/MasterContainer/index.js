@@ -7,6 +7,7 @@ import Welcome from '../Welcome'
 import Dashboard from '../Dashboard'
 import api from './api'
 
+window.api = api
 class MasterContainer extends Component {
   constructor(props) {
     super(props)
@@ -39,6 +40,7 @@ class MasterContainer extends Component {
   }
 
   getAllUserProjects({ projectIds }) {
+    // api.getAllUserProjects({})
     return Promise.resolve([ { projectTitle: 'project One'}, { projectTitle: 'project Two'}])
     // return Promise.all(projectIds.map(projectId => {
     //   return api.getUserProject({ _id: projectId }, (e) => {
