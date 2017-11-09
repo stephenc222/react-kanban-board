@@ -164,7 +164,7 @@ const Api = {
     }, 'user')
   },
 
-  deleteUser({ _id }, onError, onSuccess) {
+  removeUser({ _id }, onError, onSuccess) {
     console.log('deleteUser')
     Api._openRequest((db, store) => {
       // getUser here
@@ -208,6 +208,10 @@ const Api = {
       getAllReqeust.onsuccess = onSuccess
     }, 'projects')
   },
+
+  getAllUserProjects({ projectIds }) {
+    // TODO: *probably* need to work with cursors here...
+  },
   
 
   updateUserProject({ _id }, onError, onSuccess) {
@@ -225,7 +229,7 @@ const Api = {
   },
 
 
-  deleteUserProject({ _id }, onError, onSuccess) {
+  removeUserProject({ _id }, onError, onSuccess) {
     // TODO: work on a subset of the project data of a user document...
     console.log('deleteUserProject')
     Api._openRequest((db, store) => {

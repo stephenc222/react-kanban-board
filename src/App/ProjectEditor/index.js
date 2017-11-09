@@ -50,6 +50,7 @@ class ProjectEditor extends Component {
         projectTitle={this.state.projectTitle}
         addLane={this.addLane}
         removeLane={this.removeLane}
+        {...this.props}
       />
     )
   }

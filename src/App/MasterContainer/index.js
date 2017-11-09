@@ -23,9 +23,12 @@ class MasterContainer extends Component {
     this.onGetUserProjectSuccess = this.onGetUserProjectSuccess.bind(this)
     this.onGetUserProjectError = this.onGetUserProjectError.bind(this)
 
+    this.removeNewProject = this.removeNewProject.bind(this)
+    this.onRemoveUserProjectSuccess = this.onRemoveUserProjectSuccess.bind(this)
+    this.onRemoveUserProjectError = this.onRemoveUserProjectError.bind(this)
     // navigation
     this.goToProject = this.goToProject.bind(this)
-    this.goToDashBoard = this.goToDashBoard.bind(this)
+    this.goToDashboard = this.goToDashboard.bind(this)
     
     this.state = {
       userProfile: undefined,
@@ -33,6 +36,17 @@ class MasterContainer extends Component {
       currentProject: {},
       masterPath: '/'
     }
+  }
+
+  getAllUserProjects({ projectIds }) {
+    return Promise.resolve([ { projectTitle: 'project One'}, { projectTitle: 'project Two'}])
+    // return Promise.all(projectIds.map(projectId => {
+    //   return api.getUserProject({ _id: projectId }, (e) => {
+    //     return Promise.reject({e})
+    //   }, (e) => {
+    //     return Promise.resolve({e})
+    //   })
+    // }))
   }
 
   onCreateUserSuccess(e) {
@@ -95,8 +109,31 @@ class MasterContainer extends Component {
     }, this.onCreateUserProjectError, this.onCreateUserProjectSuccess)
   }
 
+  removeNewProject({ _id }) {
+    api.removeUserProject({ _id }, this.onRemoveUserProjectError, this.onRemoveUserProjectSuccess)
+  }
+
   onCreateUserProjectError(e) {
     console.error('onCreateUserProjectError', {e})
+  }
+
+  onRemoveUserProjectError(e) {
+    console.error('onCreateUserProjectError', {e})
+  }
+
+  onRemoveUserProjectSuccess(e) {
+    console.log('onRemoveUserProjectSuccess', { e })
+    const userProfile = this.state.userProfile
+    const removedProjectId = this.state.removedProjectId
+    
+    userProfile.projects.splice(userProfile.projects.indexOf(removedProjectId), 1)
+    this.setState({
+      userProfile,
+    }, () => {
+      api.updateUser({
+        userProfile,
+      }, this.onUpdateUserProfileError, this.onUpdateUserProfileSuccess  )
+    })
   }
   
   onCreateUserProjectSuccess(e) {
@@ -138,9 +175,16 @@ class MasterContainer extends Component {
     })
   }
 
-  goToDashBoard() {
+  goToDashboard({_id = null}) {
+    console.warn('going back to dashboard')
+
     this.setState({
-      masterPath: `/${this.state.userProfile._id}`
+      masterPath: `/${this.state.userProfile._id}`,
+      removedProjectId: _id
+    }, () => {
+      if (_id) {
+        this.removeNewProject({_id})
+      }
     })
   }
 
@@ -182,12 +226,14 @@ class MasterContainer extends Component {
               userProfile={this.state.userProfile}  
               addNewProject={this.addNewProject}
               goToProject={this.goToProject}
+              getAllUserProjects={this.getAllUserProjects}
             />
           )
         }} />
         <Route exact path={'/:userId/create-project/:projectId'} component={() => {
           return (
             <ProjectEditor
+              goToDashboard={this.goToDashboard}
               nextProject={this.state.nextProject}
               goToProject={this.goToProject}              
             />
@@ -197,7 +243,7 @@ class MasterContainer extends Component {
           return (
             <Project
               currentProject={this.state.currentProject}
-              goToDashBoard={this.goToDashBoard}
+              goToDashboard={this.goToDashboard}
             />
           )
         }} />  

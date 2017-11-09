@@ -21,7 +21,7 @@ const Board = (props) => {
       <div className='board-controls-container'>
         <div>
           <input
-            onClick={props.goToDashBoard}
+            onClick={props.goToDashboard}
             type='button'
             value='Back to Dashboard'
           />

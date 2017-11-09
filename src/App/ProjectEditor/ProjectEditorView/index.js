@@ -18,6 +18,13 @@ const ProjectEditorView = (props) => {
   }
   return (
     <div className='project-editor-view__container'>
+      <div>
+      <input
+        type='button'
+        onClick={props.goToDashboard}
+        value={"Back to Dashboard"}
+      />
+      </div>  
       New Project
       <div>
         <label>  
@@ -33,7 +40,10 @@ const ProjectEditorView = (props) => {
         <input
           type='button'
           value={'Start Project'}
-          onClick={props.goToProject}
+          onClick={() => props.goToProject({
+            projectId: props.nextProject._id,
+            currentProject: props.nextProject
+          })}
         />  
       </div>  
       <div>

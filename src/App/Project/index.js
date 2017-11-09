@@ -357,7 +357,7 @@ class Project extends Component {
                 )
             : (
                 <Board
-                  goToDashBoard={this.props.goToDashBoard}
+                  goToDashboard={this.props.goToDashboard}
                   onBoardSearchReset={this.onBoardSearchReset}  
                   boardControls={this.state.boardControls}
                   onBoardControlChange={this.onBoardControlChange}
