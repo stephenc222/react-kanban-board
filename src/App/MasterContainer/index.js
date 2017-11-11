@@ -13,10 +13,9 @@ class MasterContainer extends Component {
     super(props)
     
     this.createUser = this.createUser.bind(this)
-    
     this.addNewProject = this.addNewProject.bind(this)
-
     this.removeNewProject = this.removeNewProject.bind(this)
+
     // navigation
     this.goToProject = this.goToProject.bind(this)
     this.goToDashboard = this.goToDashboard.bind(this)
@@ -112,6 +111,8 @@ class MasterContainer extends Component {
     this.setState({
       masterPath: `/${this.state.userProfile._id}/project-board/${projectId}`,
       currentProject
+    }, () => {
+      api.updateUserProject({project: currentProject})
     })
   }
 

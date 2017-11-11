@@ -2,4 +2,4 @@
 
 ### Overview
 
-Basic single Kanban board, built with React and React-dnd
+Basic Kanban board web app, built with React, React-dnd and React Router

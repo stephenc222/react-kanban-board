@@ -232,14 +232,13 @@ const Api = {
   },
   
 
-  updateUserProject({ _id }) {
+  updateUserProject({ project }) {
     // TODO: work on a subset of the project data of a user document...
     return new Promise((resolve, reject) => {
       Api._openRequest((db, store) => {
         // getUser here
         // get all documents in store
-        const data = {}
-        const getAllRequest = store.put(data, _id)
+        const getAllRequest = store.put(project)
 
         getAllRequest.onerror = (e) => reject(e)
         getAllRequest.onsuccess = (e) => resolve(e)
