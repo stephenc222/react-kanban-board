@@ -1,6 +1,5 @@
 import RandomID from 'random-id'
 import projectTemplate from './projectTemplate'
-// import userTemplate from './userTemplate'
 
 /**
  * Object Stores:
@@ -63,7 +62,6 @@ import projectTemplate from './projectTemplate'
  *  }
 */
 
-
 const Api = {
 
   _init() {
@@ -77,7 +75,6 @@ const Api = {
 
   _openRequest(action, storeName = 'user') {
     // initialize transaction with opening of request
-    console.warn('_openRequest:', {storeName})
     const openRequest = indexedDB.open('react-kanban-board', 1)
     openRequest.onupgradeneeded = function(e) {
       this.db = e.target.result
@@ -93,7 +90,7 @@ const Api = {
         this.db.createObjectStore('files', {keyPath: '_id'})
       }
     }
-    openRequest.onsuccess = function (e) {
+    openRequest.onsuccess = (e) => {
       // assumes the requisite stores exist here
       return new Promise((resolve, reject) => {
         this.db = e.target.result
@@ -105,109 +102,116 @@ const Api = {
         .catch(err => console.warn('caught err:', { err }))
       
     };
-    openRequest.onerror = function(e) {
+    openRequest.onerror = (e) => {
       // catch error on opening request to start transaction
       console.error({ e })
     }
   },
 
-  createUser({ username, email }, onError, onSuccess) {
-    Api._openRequest((db, store) => {
-      // getUser here
-      // get all documents in store
-
-      if (!username || !email) {
-        throw new Error('no username or email entered')
-      }
-
-      const userProfile = {
-        _id: RandomID(),
-        username,
-        email,
-        created: new Date().getTime(),
-        projects: []
-      }
-      
-      const createUserRequest =  store.add(userProfile)
-
-      createUserRequest.onerror = onError
-      createUserRequest.onsuccess = onSuccess
-    }, 'user')
+  createUser({ username, email }) {
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+        // getUser here
+        // get all documents in store
+  
+        if (!username || !email) {
+          return reject(new Error('no username or email entered'))
+        }
+  
+        const userProfile = {
+          _id: RandomID(),
+          username,
+          email,
+          created: new Date().getTime(),
+          projects: []
+        }
+        
+        const createUserRequest =  store.add(userProfile)
+  
+        createUserRequest.onerror = (e) => reject(e)
+        createUserRequest.onsuccess = (e) => resolve(e)
+      }, 'user')
+    }) 
   },
-  getUser(onError, onSuccess) {
+  getUser() {
     // assumes the desired user is the one with *this* browser
     // var transaction = db.transaction(['user'], 'readwrite');
     // var store = transaction.objectStore('user');
-    Api._openRequest((db, store) => {
-      // getUser here
-      // get all documents in store
-      const getAllRequest = store.getAll()
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+        // getUser here
+        // get all documents in store
+        const getAllRequest = store.getAll()
 
-      getAllRequest.onerror = onError
-      getAllRequest.onsuccess = onSuccess
-    }, 'user')
+        getAllRequest.onerror = (e) => reject(e)
+        getAllRequest.onsuccess = (e) => resolve(e)
+      }, 'user')
+    })  
 
   },
 
   // manage the user object in state, then call this with it
-  updateUser({ userProfile }, onError, onSuccess) {
-    console.log('updateUser')
-    Api._openRequest((db, store) => {
-
-      if (!userProfile) {
-        return undefined
-      }
-      const updateUserRequest = store.put(userProfile)
-      // store.put(item);
-
-      updateUserRequest.onerror = onError
-      updateUserRequest.onsuccess = onSuccess
-    }, 'user')
+  updateUser({ userProfile }) {
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+  
+        if (!userProfile) {
+          return undefined
+        }
+        const updateUserRequest = store.put(userProfile)
+  
+        updateUserRequest.onerror = (e) => reject(e)
+        updateUserRequest.onsuccess = (e) => resolve(e)
+      }, 'user')
+    })
   },
 
-  removeUser({ _id }, onError, onSuccess) {
-    console.log('deleteUser')
-    Api._openRequest((db, store) => {
-      // getUser here
-      // get all documents in store
-      const getAllRequest = store.delete(_id)
-
-      getAllRequest.onerror = onError
-      getAllRequest.onsuccess = onSuccess
-    }, 'user')
+  removeUser({ _id }) {
+    return new Promise((resolve, reject) => { 
+      Api._openRequest((db, store) => {
+        // getUser here
+        // get all documents in store
+        const getAllRequest = store.delete(_id)
+  
+        getAllRequest.onerror = (e) => reject(e)
+        getAllRequest.onsuccess = (e) => resolve(e)
+      }, 'user')
+    })
 
   },
 
-  createUserProject({ nextProjectId, userId }, onError, onSuccess) {
+  createUserProject({ nextProjectId, userId }) {
     // TODO: work on a subset of the project data of a user document...
-    console.log('createNewUserProject')
-    Api._openRequest((db, store) => {
-      // getUser here
-      // get all documents in store
-      const nextProject = { ...projectTemplate }
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+        // getUser here
+        // get all documents in store
+        const nextProject = { ...projectTemplate }
 
-      nextProject._id = nextProjectId
-      nextProject.userId = userId
+        nextProject._id = nextProjectId
+        nextProject.userId = userId
 
-      const createUserProjectRequest = store.add(nextProject)
+        const createUserProjectRequest = store.add(nextProject)
 
-      createUserProjectRequest.onerror = onError
-      createUserProjectRequest.onsuccess = onSuccess
-    }, 'projects')
+        createUserProjectRequest.onerror = (e) => reject(e)
+        createUserProjectRequest.onsuccess = (e) => resolve(e)
+      }, 'projects')
+    })  
   },
 
-  getUserProject({ projectId },onError, onSuccess) {
+  getUserProject({ projectId }) {
     // TODO: work on a subset of the project data of a user document...
-    console.log('getUserProject')
-    Api._openRequest((db, store) => {
-      // getUser here
-      // get all documents in store
-      const _id = projectId
-      const getAllRequest = store.get(_id)
-
-      getAllRequest.onerror = onError
-      getAllRequest.onsuccess = onSuccess
-    }, 'projects')
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+        // getUser here
+        // get all documents in store
+        const _id = projectId
+        const getAllRequest = store.get(_id)
+  
+        getAllRequest.onerror = (e) => reject(e)
+        getAllRequest.onsuccess = (e) => resolve(e)
+      }, 'projects')
+    }) 
   },
 
   getAllUserProjects({ userId }) {
@@ -221,42 +225,41 @@ const Api = {
           resolve(userProjects)
         }
 
-        getAllRequest.onerror = (e) => {
-          if (e) {
-            reject(e)
-          }
-        }
+        getAllRequest.onerror = (e) => reject(e)
+
       }, 'projects')
     })
   },
   
 
-  updateUserProject({ _id }, onError, onSuccess) {
+  updateUserProject({ _id }) {
     // TODO: work on a subset of the project data of a user document...
-    console.log('updateUserProject')
-    Api._openRequest((db, store) => {
-      // getUser here
-      // get all documents in store
-      const data = {}
-      const getAllRequest = store.put(data, _id)
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+        // getUser here
+        // get all documents in store
+        const data = {}
+        const getAllRequest = store.put(data, _id)
 
-      getAllRequest.onerror = onError
-      getAllRequest.onsuccess = onSuccess
-    }, 'projects')
+        getAllRequest.onerror = (e) => reject(e)
+        getAllRequest.onsuccess = (e) => resolve(e)
+      }, 'projects')
+    })  
   },
 
 
-  removeUserProject({ _id }, onError, onSuccess) {
+  removeUserProject({ _id }) {
     // TODO: work on a subset of the project data of a user document...
-    console.log('deleteUserProject')
-    Api._openRequest((db, store) => {
-      // getUser here
-      // get all documents in store
-      const getAllRequest = store.delete(_id)
+    return new Promise((resolve, reject) => {
+      Api._openRequest((db, store) => {
+        // getUser here
+        // get all documents in store
+        const getAllRequest = store.delete(_id)
 
-      getAllRequest.onerror = onError
-      getAllRequest.onsuccess = onSuccess
-    }, 'projects')
+        getAllRequest.onerror = (e) => reject(e)
+        getAllRequest.onsuccess = (e) => resolve(e)
+      }, 'projects')
+    })  
   }
 }
 

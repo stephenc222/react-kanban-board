@@ -5,6 +5,7 @@ class ProjectEditor extends Component {
     super(props)
     this.onProjectTitleChange = this.onProjectTitleChange.bind(this)
     this.goToProject = this.goToProject.bind(this)
+    this.goToDashboard = this.goToDashboard.bind(this)
     this.state = {
       nextProject: {},
       projectTitle: ''
@@ -32,6 +33,11 @@ class ProjectEditor extends Component {
     console.warn('removeLane:', {lane, index})
   }
 
+  goToDashboard() {
+    const projectId = this.state.nextProject._id
+    this.props.goToDashboard({_id: projectId})
+  }
+
   goToProject() {
     const projectId = this.state.nextProject._id
     const nextProject = this.state.nextProject
@@ -46,11 +52,11 @@ class ProjectEditor extends Component {
       <ProjectEditorView
         nextProject={this.state.nextProject}
         goToProject={this.goToProject}
+        goToDashboard={this.goToDashboard}
         onProjectTitleChange={this.onProjectTitleChange}
         projectTitle={this.state.projectTitle}
         addLane={this.addLane}
         removeLane={this.removeLane}
-        {...this.props}
       />
     )
   }
