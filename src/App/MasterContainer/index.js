@@ -15,22 +15,36 @@ class MasterContainer extends Component {
     this.createUser = this.createUser.bind(this)
     this.addNewProject = this.addNewProject.bind(this)
     this.removeNewProject = this.removeNewProject.bind(this)
-
+    this.getAllUserProjects = this.getAllUserProjects.bind(this)
     // navigation
     this.goToProject = this.goToProject.bind(this)
     this.goToDashboard = this.goToDashboard.bind(this)
     
     this.state = {
       userProfile: undefined,
+      userProjects: [],
       nextProject: {},
       currentProject: {},
       masterPath: '/'
     }
   }
 
-  getAllUserProjects({ projectIds }) {
-    // api.getAllUserProjects({})
-    return Promise.resolve([ { projectTitle: 'project One'}, { projectTitle: 'project Two'}])
+  getAllUserProjects() {
+    return api.getAllUserProjects({ userId: this.state.userProfile._id })
+    .then(foundUserProjects => {
+      const userProjects = foundUserProjects.map(project => { 
+        const {
+          _id,
+          projectTitle
+        } = project
+        
+        return {
+          _id,
+          projectTitle
+        }
+      })
+      return userProjects
+    })
   }
   
   componentDidMount() {
@@ -45,8 +59,21 @@ class MasterContainer extends Component {
 
         const userProfile = e.target.result[0]
         const masterPath = `/${userProfile._id}`
-    
-        this.setState({ userProfile, masterPath })
+        api.getAllUserProjects({ userId: userProfile._id })
+        .then(foundUserProjects => {
+          const userProjects = foundUserProjects.map(project => { 
+            const {
+              _id,
+              projectTitle
+            } = project
+            
+            return {
+              _id,
+              projectTitle
+            }
+          })
+          this.setState({ userProfile, masterPath, userProjects })
+        })
       }
     })
   }
@@ -107,13 +134,26 @@ class MasterContainer extends Component {
     })
   }
 
-  goToProject({ projectId, currentProject }) {
-    this.setState({
-      masterPath: `/${this.state.userProfile._id}/project-board/${projectId}`,
-      currentProject
-    }, () => {
-      api.updateUserProject({project: currentProject})
-    })
+  goToProject({ projectId, currentProject = undefined }) {
+    if (currentProject) {
+      this.setState({
+        masterPath: `/${this.state.userProfile._id}/project-board/${projectId}`,
+        currentProject
+      }, () => {
+        api.updateUserProject({project: currentProject})
+      })
+    } else {
+      api.getUserProject({ projectId })
+      .then(e => {
+        const currentProject = e.target.result
+        
+        this.setState({
+          currentProject,
+          nextProjectId: projectId,
+          masterPath: `${this.state.masterPath}/project-board/${projectId}`,
+        })
+      })
+    }
   }
 
   goToDashboard({ _id = undefined }) {
@@ -149,6 +189,7 @@ class MasterContainer extends Component {
           return (
             <Dashboard
               userProfile={this.state.userProfile}  
+              userProjects={this.state.userProjects}
               addNewProject={this.addNewProject}
               goToProject={this.goToProject}
               getAllUserProjects={this.getAllUserProjects}
