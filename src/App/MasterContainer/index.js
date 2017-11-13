@@ -210,6 +210,7 @@ class MasterContainer extends Component {
             <Project
               currentProject={this.state.currentProject}
               goToDashboard={this.goToDashboard}
+              updateUserProject={api.updateUserProject}
             />
           )
         }} />  

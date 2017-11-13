@@ -1,3 +1,5 @@
+import RandomID from 'random-id'
+
 export default {
   _id: '0b',
   userId: '1a',
@@ -6,30 +8,67 @@ export default {
   lanes: [
     {
       laneTitle: 'Planned',
-      cards: []
+      cards: [
+        {
+          type: 'bug',   
+          complexity: 3,        
+          id: RandomID(),        
+          cardNumber: 108,        
+          title: 'DUMMY',
+          summary: 'just some placeholder text',
+          isPlaceholderCard: true
+        },
+        {
+          type: 'bug',    
+          complexity: 1,        
+          id: RandomID(),   
+          cardNumber: 106,        
+          title: 'in testing card 2',
+          summary: 'summary for in testing card 2'
+        }
+      ]
     },
     {
       laneTitle: 'In Dev',
-      cards: []
+      cards: [
+        {
+          type: 'bug',   
+          complexity: 3,        
+          id: RandomID(),        
+          cardNumber: 108,        
+          title: 'DUMMY',
+          summary: 'just some placeholder text',
+          isPlaceholderCard: true
+        }
+      ]
     },
     {
       laneTitle: 'In Testing',
       cards: [
         {
-          type: 'userStory',
-          complexity: 2,
-          _id: '5f',
-          cardNumber: 105,
-          title: 'in testing card 1',
-          summary: 'summary for in testing card 1',
-          // array of data file id's for this card
-          files: ['2a', '3a', '4b']
+          type: 'bug',   
+          complexity: 3,        
+          id: RandomID(),        
+          cardNumber: 108,        
+          title: 'DUMMY',
+          summary: 'just some placeholder text',
+          isPlaceholderCard: true
         }
       ]
     },
     {
       laneTitle: "Done",
-      cards: []
+      cards: [
+        {
+          type: 'bug',   
+          complexity: 3,        
+          id: RandomID(),        
+          cardNumber: 108,        
+          title: 'DUMMY',
+          summary: 'just some placeholder text',
+          isPlaceholderCard: true
+        }
+      ]
     }
   ]
 }

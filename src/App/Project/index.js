@@ -62,107 +62,6 @@ class Project extends Component {
     this.setState({...this.props.currentProject})
   }
 
-  componentWillMount() {
-    // call to the DB to get initial card data, stubbed for now
-    const lanes = this.state.lanes.slice()
-
-    const dummyPlannedCards = [
-      {
-        type: 'userStory',
-        complexity: 2,        
-        id: RandomID(),
-        cardNumber: 100,
-        title: 'planned card 1',
-        summary: 'summary for planned card 1'
-      },
-      {
-        type: 'userStory',   
-        complexity: 1,        
-        id: RandomID(),
-        cardNumber: 101,        
-        title: 'planned card 2',
-        summary: 'summary for planned card 2'
-      }
-    ]
-
-    const dummyInDevCards = [
-      {
-        type: 'userStory',  
-        complexity: 3,        
-        id: RandomID(),   
-        cardNumber: 102,        
-        title: 'in dev card 1',
-        summary: 'summary for in dev card 1'
-      },
-      {
-        type: 'bug',    
-        complexity: 4,        
-        id: RandomID(),        
-        cardNumber: 103,        
-        title: 'in dev card 2',
-        summary: 'summary for in dev card 2'
-      },
-      {
-        type: 'userStory',   
-        complexity: 5,        
-        id: RandomID(),        
-        cardNumber: 104,        
-        title: 'in dev card 3',
-        summary: 'summary for in dev card 3'
-      }
-    ]
-
-    const dummyInTestingCards = [
-      {
-        type: 'userStory', 
-        complexity: 2,        
-        id: RandomID(),      
-        cardNumber: 105,        
-        title: 'in testing card 1',
-        summary: 'summary for in testing card 1',
-        files: []
-      },
-      {
-        type: 'bug',    
-        complexity: 1,        
-        id: RandomID(),   
-        cardNumber: 106,        
-        title: 'in testing card 2',
-        summary: 'summary for in testing card 2'
-      }
-    ]
-
-    const dummyInDone = [
-      {
-        type: 'userStory',  
-        complexity: 1,
-        id: RandomID(),  
-        cardNumber: 107,        
-        title: 'in done card 1',
-        summary: 'summary for in done card 1'
-      },
-      {
-        type: 'bug',  
-        complexity: 3,        
-        id: RandomID(),        
-        cardNumber: 108,        
-        title: 'in done card 2',
-        summary: 'summary for in done card 2'
-      }
-    ]
-
-    lanes[0].cards = dummyPlannedCards
-    lanes[1].cards = dummyInDevCards
-    lanes[2].cards = dummyInTestingCards
-    lanes[3].cards = dummyInDone
-
-    // defaults to sorted by least complex
-    lanes.forEach(lane => lane.cards.sort((a,b) => a.complexity - b.complexity ))
-
-    this.setState({lanes})
-
-  }
-
   onEditCard(event, currentCard, laneIndex, cardIndex) {
     this.setState({
       showEditor: true,
@@ -260,20 +159,31 @@ class Project extends Component {
       lanes
     } = this.state
 
+    const {
+      _id,
+      userId,
+      projectTitle,
+      filteredCardLanes,
+    } = this.state
+
     if (currentCard.title.length && currentCard.summary.length) {
       // only update a card if the card is not empty in the editor
       // removing a card is a separate action
       lanes[laneIndex].cards[cardIndex] = currentCard
-      this.setState({
-        lanes,
-        showEditor: false
+      this.setState({ lanes, showEditor: false }, () => {
+        const project = {
+          _id,
+          userId,
+          projectTitle,
+          filteredCardLanes,
+          lanes,
+        }
+        this.props.updateUserProject({ project })
+        .catch(e => console.error('updateUserProject', {e}))
       })
     } else {
-      this.setState({
-        showEditor: false
-      })
+      this.setState({ showEditor: false })
     }
-    
   }
 
   showBoard(event) {
@@ -285,9 +195,17 @@ class Project extends Component {
 
   moveCard(dragCard, dropCard) {
     const lanes = this.state.lanes.slice()
-    const boardControls = {...this.state.boardControls}
+    const boardControls = { ...this.state.boardControls }
+    const {
+      _id,
+      userId,
+      projectTitle,
+      filteredCardLanes,
+    } = this.state
+    
     let dropCardLane = []
     let dragCardLane = []
+
     for (let lane of lanes) {
       // find lane of both cards
       if (lane.cards.includes(dropCard)) {
@@ -328,7 +246,17 @@ class Project extends Component {
           lanes.forEach(lane => lane.cards.sort((a,b) => b.complexity - a.complexity ))      
         }
 
-        this.setState({ lanes })
+        this.setState({ lanes }, () => {
+          const project = {
+            _id,
+            userId,
+            projectTitle,
+            filteredCardLanes,
+            lanes,
+          }
+          this.props.updateUserProject({ project })
+          .catch(e => console.error('updateUserProject', {e}))
+        })
         return 
       }
     }
