@@ -9,12 +9,13 @@
   display: flex;
   flex-direction: row;
   flex-grow: 1;
+  padding-top: 30px;
   width: 100%;
 }
 
 .lane-wrapper-container {
   display: flex;
-  flex-grow: 1;
+  width: 100%;
   border-right: 1px solid black;
 }
 

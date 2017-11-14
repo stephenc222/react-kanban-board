@@ -22,6 +22,7 @@ class Project extends Component {
 
     this.state = {
       projectTitle: 'Your Project Title',
+      maxCardNumber: 100,
       filteredCardLanes: [],
       lanes: [
         {
@@ -45,11 +46,12 @@ class Project extends Component {
       isSearching: false,
       cardIndex: null,
       laneIndex: null,
+      isNewCard: false,
       currentCard: {
         id: RandomID(),
         title: '',
         assignee: {},
-        summary: ''
+        summary: '',
       },
       boardControls: {
         sortType: 'leastComplex',
@@ -67,7 +69,8 @@ class Project extends Component {
       showEditor: true,
       currentCard,
       cardIndex,
-      laneIndex
+      laneIndex,
+      isNewCard: false
     })
   }
 
@@ -145,18 +148,66 @@ class Project extends Component {
 
   addCard() {
     // just defaults to adding a new card in 'planned'
+    const newCard = {
+      cardNumber: this.state.maxCardNumber + 1,
+      complexity: 1,
+      id: RandomID(),
+      summary: '',
+      laneType: 'Planned',
+      title: '',
+      type: 'userStory'
+    }
 
+    this.setState({
+      showEditor: true,
+      isNewCard: true,
+      currentCard: newCard
+    })
   }
 
-  removeCard() {
-    // remove card
+  removeCard(event) {
+
+    const {
+      _id,
+      userId,
+      projectTitle,
+      filteredCardLanes,
+      laneIndex,
+      lanes,
+      maxCardNumber,
+      cardIndex
+    } = this.state
+
+    const shouldDeleteCard = window.confirm('Delete Card?')
+
+    if (shouldDeleteCard) {
+      lanes[laneIndex].cards.splice(cardIndex, 1)
+      return this.setState({
+        lanes,
+        showEditor: false,
+        laneIndex: null,
+        cardIndex: null
+      }, () => {
+        const project = {
+          _id,
+          userId,
+          projectTitle,
+          filteredCardLanes,
+          maxCardNumber,
+          lanes,
+        }
+        this.props.updateUserProject({ project })
+        .catch(e => console.error('updateUserProject', {e}))
+      })
+    } 
   }
 
   onUpdateCard(currentCard) {
     const {
       laneIndex,
       cardIndex,
-      lanes
+      lanes,
+      isNewCard,
     } = this.state
 
     const {
@@ -166,11 +217,44 @@ class Project extends Component {
       filteredCardLanes,
     } = this.state
 
+    let maxCardNumber = this.state.maxCardNumber || 100
+
+    if (isNewCard) {
+      // for now assuming adding to first lane
+      lanes[0].cards[0].type === 'placeholder'
+      ? lanes[0].cards.pop() && lanes[0].cards.push(currentCard)
+      : lanes[0].cards.push(currentCard)      
+      return this.setState({
+        lanes,
+        maxCardNumber: ++maxCardNumber,
+        showEditor: false,
+        isNewCard: false,
+        currentCard: {
+          id: RandomID(),
+          title: '',
+          assignee: {},
+          summary: '',
+          cardNumber: maxCardNumber
+        }
+      }, () => {
+        const project = {
+          _id,
+          userId,
+          projectTitle,
+          filteredCardLanes,
+          lanes,
+          maxCardNumber: maxCardNumber
+        }
+        this.props.updateUserProject({ project })
+        .catch(e => console.error('updateUserProject', {e}))
+      })
+    }
+
     if (currentCard.title.length && currentCard.summary.length) {
       // only update a card if the card is not empty in the editor
       // removing a card is a separate action
       lanes[laneIndex].cards[cardIndex] = currentCard
-      this.setState({ lanes, showEditor: false }, () => {
+      return this.setState({ lanes, showEditor: false }, () => {
         const project = {
           _id,
           userId,
@@ -182,15 +266,13 @@ class Project extends Component {
         .catch(e => console.error('updateUserProject', {e}))
       })
     } else {
-      this.setState({ showEditor: false })
+      return this.setState({ showEditor: false })
     }
   }
 
   showBoard(event) {
     event.stopPropagation()
-    this.setState({
-      showEditor: false
-    })
+    this.setState({ showEditor: false })
   }
 
   moveCard(dragCard, dropCard) {
@@ -281,6 +363,7 @@ class Project extends Component {
                   currentCard={this.state.currentCard}
                   removeCard={this.removeCard}
                   onUpdateCard={this.onUpdateCard}
+                  isNewCard={this.state.isNewCard}
                   />
                 )
             : (

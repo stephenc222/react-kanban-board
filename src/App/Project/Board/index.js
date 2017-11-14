@@ -26,6 +26,13 @@ const Board = (props) => {
             value='Back to Dashboard'
           />
         </div>    
+        <div>
+          <input
+            onClick={props.addCard}
+            type='button'
+            value='Add Card'
+          />
+        </div>    
         <div className='board-controls--sort-control'>
           Sort By:&nbsp;
           <label>  

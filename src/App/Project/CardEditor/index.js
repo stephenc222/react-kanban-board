@@ -55,6 +55,11 @@ class CardEditor extends Component {
         editorState: DraftEditorState.createWithContent(contentState),
         currentCard: this.props.currentCard
       })
+    } else {
+      this.setState({
+        editorState: DraftEditorState.createEmpty(),
+        currentCard: this.props.currentCard
+      })
     }
   }
 
@@ -188,10 +193,19 @@ class CardEditor extends Component {
                   </div>  
                     {`# ${this.state.currentCard.cardNumber}`}  
                 </div>  
-                <div className='editor-main-complexity-container'>complexity: {this.state.currentCard.complexity}</div>
-                  <div className='editor-card-complexity-container'>
-                    {this.state.complexArr.map(this.renderComplexity)}
-                  </div>
+                <div className='editor-main-complexity-container'>
+                  complexity: {this.state.currentCard.complexity}
+                </div>
+                <div className='editor-card-complexity-container'>
+                  {this.state.complexArr.map(this.renderComplexity)}
+                </div>
+                {!this.props.isNewCard && <div className='editor-card-remove-card-button'>
+                  <input
+                    type='button'
+                    value='Remove Card'
+                    onClick={this.props.removeCard}
+                  />  
+                </div>}
               </div>
           </div>  
           <div className='editor-card-summary-container'>
