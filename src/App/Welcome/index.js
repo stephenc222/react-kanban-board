@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import WelcomeView from './WelcomeView'
 class Welcome extends Component {
   constructor(props) {
     super(props)
@@ -7,51 +8,35 @@ class Welcome extends Component {
     this.onSubmit = this.onSubmit.bind(this)
 
     this.state = {
-      username: '',
-      email: ''
+      email: '',
+      password: '',
     }
   }
 
   onSubmit() {
     const {
-      username,
-      email
+      email,
+      password
     } = this.state
 
-    this.props.createUser({username, email})
+    this.props.createUser({email, password})
   }
 
   onTextChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
   render () {
+    const {
+      email,
+      password
+    } = this.state
     return (
-      <div>
-        Create an account
-        <div>
-          <label>  
-            username  
-            <input
-              type='text'
-              name='username'
-              onChange={this.onTextChange}
-              value={this.state.username} />
-          </label>  
-        </div>
-        <div>
-          <label>
-            Email    
-            <input
-              type='text'
-              name='email'
-              onChange={this.onTextChange}
-              value={this.state.email} />
-          </label>
-          <div>
-            <input type='button' onClick={this.onSubmit} value='Create'/>  
-          </div>  
-        </div>
-      </div>
+      <WelcomeView
+        password={password}
+        email={email}
+        onTextChange={this.onTextChange}
+        onSubmit={this.onSubmit}
+      />
     )
   }
 }

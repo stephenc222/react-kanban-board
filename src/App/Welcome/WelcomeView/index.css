@@ -1,0 +1,67 @@
+.welcome-page-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
+  background: lightgray; /* For browsers that do not support gradients */
+  background: linear-gradient(to bottom right, lightgrey, lightslategray);
+  /* background: linear-gradient(to bottom right, #C7D5CE, #A8BDB3) */
+  /* background: linear-gradient(to bottom right, #C1FBCF,#68F68A ); Standard syntax */
+  height: 100%;
+  width: 100%;
+}
+
+.welcome-page-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #3b3b38;
+  background: #fff;  
+  height: 60%;
+  width: 40%;
+}
+
+.welcome-page-main-container * {
+  padding: 10px;
+}
+
+.welcome-page-input-container {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px
+  /* border: 1px solid blue; */
+}
+
+.welcome-page-input--password {
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.welcome-page-input--password input {
+  padding: 0px;
+}
+
+.welcome-page-input--email {
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: space-between;  
+  flex-direction: row;  
+}
+
+.welcome-page-input--email input {
+  padding: 0px;
+}
+
+.welcome-page-input--submit {
+  display: flex;
+  justify-content: center;
+}
+
+input[type="button"] {
+  padding: 0px;
+}

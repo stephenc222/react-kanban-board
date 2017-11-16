@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import RandomID from 'random-id'
-import { Route, Redirect, withRouter } from 'react-router-dom'
+import { Route, Redirect, withRouter, Switch } from 'react-router-dom'
 import Project from '../Project'
 import ProjectEditor from '../ProjectEditor'
 import Welcome from '../Welcome'
@@ -78,8 +78,8 @@ class MasterContainer extends Component {
     })
   }
 
-  createUser({ username, email }) {
-    api.createUser({ username, email })
+  createUser({ email, password }) {
+    api.createUser({ email, password })
     .then(e => {
       api.getUser()
       .then(e => {
@@ -176,7 +176,7 @@ class MasterContainer extends Component {
     }
 
     return (
-      <div>
+      <Switch>
         <Route exact path={'/'} component={() => {
           return (
             <Welcome
@@ -214,7 +214,7 @@ class MasterContainer extends Component {
             />
           )
         }} />  
-      </div>  
+      </Switch>  
     )
   }
 }

@@ -108,17 +108,17 @@ const Api = {
     }
   },
 
-  createUser({ username, email }) {
+  createUser({ email, password }) {
     return new Promise((resolve, reject) => {
       Api._openRequest('user', (db, store) => {
 
-        if (!username || !email) {
-          return reject(new Error('no username or email entered'))
+        if (!email || !password) {
+          return reject(new Error('no email or password entered'))
         }
   
         const userProfile = {
           _id: RandomID(),
-          username,
+          password,
           email,
           created: new Date().getTime(),
           projects: []
