@@ -3,13 +3,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
-  background: lightgray; /* For browsers that do not support gradients */
+  background: lightgrey;
   background: linear-gradient(to bottom right, lightgrey, lightslategray);
-  /* background: linear-gradient(to bottom right, #C7D5CE, #A8BDB3) */
-  /* background: linear-gradient(to bottom right, #C1FBCF,#68F68A ); Standard syntax */
   height: 100%;
   width: 100%;
+}
+
+.welcome-page-form-header {
+  display: flex;
+  justify-content: center;  
+  font-size: 20px;  
 }
 
 .welcome-page-content-container {
@@ -31,13 +34,11 @@
   display: flex;
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 18px
-  /* border: 1px solid blue; */
+  font-size: 18px;
 }
 
 .welcome-page-input--password {
   display: flex;
-  /* border: 1px solid red; */
   justify-content: space-between;
   flex-direction: row;
 }
@@ -46,9 +47,16 @@
   padding: 0px;
 }
 
+input[type='text']:focus {
+  outline:0;
+}
+
+.welcome-page-input--password input {
+  padding: 0px;
+}
+
 .welcome-page-input--email {
   display: flex;
-  /* border: 1px solid red; */
   justify-content: space-between;  
   flex-direction: row;  
 }
@@ -62,6 +70,24 @@
   justify-content: center;
 }
 
-input[type="button"] {
-  padding: 0px;
+.welcome-page-input--submit input[type='button'] {
+  width: 100%;
+  background-color: #6699cc;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;  
+  transition: 0.25s ease;
+}
+
+.welcome-page-input--submit input[type='button']:hover {
+  background-color: #5381a8;
+}
+
+.welcome-page-input--submit input[type='button']:focus {
+  outline:0;
+  background-color: #5381a8;  
 }

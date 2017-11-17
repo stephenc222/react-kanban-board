@@ -5,7 +5,7 @@ const WelcomeView = (props) => {
   return (
     <div className='welcome-page-main-container'>
       <div className='welcome-page-content-container'>
-        <div>Sign Up</div>
+        <div className='welcome-page-form-header'>React Kanban</div>
         <div className='welcome-page-input-container'>
           <div className='welcome-page-input--email'>
             <div>  
@@ -14,6 +14,7 @@ const WelcomeView = (props) => {
             <div>
               <input
                 type='text'
+                ref={props.focusEmailInput}
                 name='email'
                 onChange={props.onTextChange}
                 value={props.email} />
@@ -32,7 +33,7 @@ const WelcomeView = (props) => {
             </div>
           </div>
           <div className='welcome-page-input--submit'>
-            <input type='button' onClick={props.onSubmit} value='Create'/>  
+            <input type='button' onClick={props.onSubmit} value='Create Account'/>  
           </div>  
         </div>
       </div>

@@ -5,12 +5,17 @@ class Welcome extends Component {
     super(props)
 
     this.onTextChange = this.onTextChange.bind(this)
+    this.focusEmailInput = this.focusEmailInput.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
 
     this.state = {
       email: '',
       password: '',
     }
+  }
+
+  componentDidMount() {
+    this.emailInput.focus()
   }
 
   onSubmit() {
@@ -25,6 +30,11 @@ class Welcome extends Component {
   onTextChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
+
+  focusEmailInput(elem) {
+    this.emailInput = elem
+  }
+  
   render () {
     const {
       email,
@@ -33,6 +43,7 @@ class Welcome extends Component {
     return (
       <WelcomeView
         password={password}
+        focusEmailInput={this.focusEmailInput}
         email={email}
         onTextChange={this.onTextChange}
         onSubmit={this.onSubmit}
