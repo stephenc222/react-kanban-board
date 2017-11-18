@@ -23,6 +23,7 @@ class Dashboard extends Component {
 
     return (
       <DashboardView
+        userProfile={this.props.userProfile}
         userProjects={this.state.userProjects}
         goToProject={this.props.goToProject}
         addNewProject={this.props.addNewProject}
