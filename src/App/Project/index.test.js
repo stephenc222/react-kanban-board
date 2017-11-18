@@ -1,8 +1,16 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
+import 'raf/polyfill'
+import { expect } from 'chai'
+import Enzyme, { mount } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+import sinon from 'sinon'
+import Project from '.'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<App />, div)
+Enzyme.configure({ adapter: new Adapter() })
+
+describe('Project Component', () => {
+  it('gets mounted to the dom', () => {
+
+    expect(mount(<Project />))
+  })
 })
