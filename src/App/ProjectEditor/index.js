@@ -3,12 +3,14 @@ import ProjectEditorView from './ProjectEditorView'
 class ProjectEditor extends Component {
   constructor(props) {
     super(props)
+    this.onProjectLaneTitleChange = this.onProjectLaneTitleChange.bind(this)
     this.onProjectTitleChange = this.onProjectTitleChange.bind(this)
     this.goToProject = this.goToProject.bind(this)
     this.goToDashboard = this.goToDashboard.bind(this)
     this.state = {
       nextProject: {},
-      projectTitle: ''
+      projectTitle: '',
+      newLaneTitle: '',
     }
   }
 
@@ -23,14 +25,26 @@ class ProjectEditor extends Component {
     this.setState({ nextProject, projectTitle })
   }
 
-  addLane(e) {
-    // TODO: adds a lane, but first reveals a text input for naming the lane
-    console.warn('addLane')
+  onProjectLaneTitleChange({e, laneIndex}) {
+    const nextProject = this.state.nextProject
+    nextProject.lanes[laneIndex].laneTitle = e.target.value
+    this.setState({nextProject})
   }
 
-  removeLane(e, lane, index) {
-    // TODO: removes a lane
-    console.warn('removeLane:', {lane, index})
+  onNewProjectLaneTitleChange({e}) {
+    this.setState({newLaneTitle: e.target.value})
+  }
+
+  addLane({e}) {
+    // TODO: adds a lane, but first reveals a text input for naming the lane
+    console.warn('addLane')
+    // this.props.updateUserProject
+  }
+
+  removeLane({e, lane, laneIndex}) {
+    // TODO: removes a lane - incorporate the api for updateUserProject here
+    console.warn('removeLane:', {lane, laneIndex})
+    // this.props.updateUserProject
   }
 
   goToDashboard() {
@@ -54,6 +68,7 @@ class ProjectEditor extends Component {
         goToProject={this.goToProject}
         goToDashboard={this.goToDashboard}
         onProjectTitleChange={this.onProjectTitleChange}
+        onProjectLaneTitleChange={this.onProjectLaneTitleChange}
         projectTitle={this.state.projectTitle}
         addLane={this.addLane}
         removeLane={this.removeLane}

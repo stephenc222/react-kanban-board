@@ -1,8 +1,171 @@
-.project-editor-view__container {
-  display: flex;
-  flex-direction: column;
+
+* {
+  box-sizing: border-box;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
-.project-editor-view__container > * {
+body {
+  padding: 0px;
+  margin: 0px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.project-editor-top-container {
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid blue;
+}
+
+.content-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid blue;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid blue;
+  width: 100%;
+  height: 100%;
+  background: lightgrey;
+  background: linear-gradient(to bottom right, lightgrey, lightslategray);
+}
+
+.header {
+  text-align: center;
+  display: flex;
+}
+
+.back-button {
+  flex-basis: 0%;
+}
+
+.title {
+  flex-basis: 100%;
+}
+
+.edit-lane {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 22px;
+}
+
+.remove-lane-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.project-content {
+  display: flex;
+  padding: 30px;
+  background: #fff;
+  border: 1px solid black;
+}
+
+.project-controls {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 45%;
+  border: 1px solid black;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-title {
+  padding: 75px;
+  border: 1px solid black;
+}
+
+.add-lane-container {
+  padding: 55px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+.add-lane-container label {
+  padding: 25px;
+}
+
+.go-to-project {
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+
+button {
   padding: 5px;
+  font-size: 14px;
+}
+
+.project-lanes-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  flex-basis: 55%;
+  flex-grow: 1;
+  border: 1px solid black;
+  align-items: center;
+}
+
+.project-lanes-container-header {
+  text-align: center;
+  font-size: 32px;
+}
+
+.lane-container {
+  background: lightblue;
+  padding: 10px;
+  border-radius: 15%;
+  width: 50%;
+  margin: 10px;
+  box-shadow: 0 0 5px black;
+}
+
+.remove-lane {
+  font-size: 14px;
+  min-height: 20px;
+  min-width: 20px;
+  border: 1px solid white;
+  background: salmon;
+  color: white;
+  display: flex;
+  width: 5%;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-lane:hover {
+  background-color: red;
+  cursor: pointer;
+}
+
+.project-controls button {
+  width: 100%;
+  background-color: #6699cc;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;  
+  transition: 0.25s ease;
+}
+
+.project-controls button:hover {
+  background-color: #5381a8;
+}
+
+.project-controls button:focus {
+  outline:0;
+  background-color: #5381a8;  
 }

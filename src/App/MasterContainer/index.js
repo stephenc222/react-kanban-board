@@ -31,20 +31,7 @@ class MasterContainer extends Component {
 
   getAllUserProjects() {
     return api.getAllUserProjects({ userId: this.state.userProfile._id })
-    .then(foundUserProjects => {
-      const userProjects = foundUserProjects.map(project => { 
-        const {
-          _id,
-          projectTitle
-        } = project
-        
-        return {
-          _id,
-          projectTitle
-        }
-      })
-      return userProjects
-    })
+    .then(userProjects => this.setState({userProjects}))
   }
   
   componentDidMount() {
@@ -60,20 +47,11 @@ class MasterContainer extends Component {
         const userProfile = e.target.result[0]
         const masterPath = `/${userProfile._id}`
         api.getAllUserProjects({ userId: userProfile._id })
-        .then(foundUserProjects => {
-          const userProjects = foundUserProjects.map(project => { 
-            const {
-              _id,
-              projectTitle
-            } = project
-            
-            return {
-              _id,
-              projectTitle
-            }
-          })
-          this.setState({ userProfile, masterPath, userProjects })
-        })
+        .then(userProjects => this.setState({ 
+          userProfile, 
+          masterPath, 
+          userProjects: userProjects.filter(project => project.projectTitle.length)
+        }))
       }
     })
   }
@@ -168,7 +146,7 @@ class MasterContainer extends Component {
   }
 
   render() {
-
+    
     if (this.state.masterPath !== this.props.history.location.pathname) {
       return (
         <Redirect to={this.state.masterPath} push />
@@ -201,7 +179,8 @@ class MasterContainer extends Component {
             <ProjectEditor
               goToDashboard={this.goToDashboard}
               nextProject={this.state.nextProject}
-              goToProject={this.goToProject}              
+              goToProject={this.goToProject}   
+              updateUserProject={api.updateUserProject}              
             />
           )
         }} />

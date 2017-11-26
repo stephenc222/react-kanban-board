@@ -11,7 +11,6 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
-  background: #203060;
   height: 100vh;
   overflow-y: hidden;
 }
@@ -21,15 +20,12 @@ body {
   width: 100%;
   min-height: 100vh;
   max-height: 100vh;
-/*   width: 320px; */
-/*   height: 480px; */
   background: white;
 }
 .project-list-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-/*   background: rgba(0,0,0,0.2); */
 }
 
 .project-list-items-container {
@@ -49,7 +45,6 @@ body {
   padding: 15px;
   padding-bottom: 0;
   padding-top: 10px;
-/*   justify-content: flex-end; */
 }
 
 .new-project-button {
@@ -86,7 +81,6 @@ body {
   border-bottom: 2px solid gray;
   border-left: 2px solid black;
   cursor: pointer;
-/*   display: flex; */
 }
 
 .project-list-item:hover {
@@ -109,8 +103,6 @@ body {
 }
 
 .project-list-item-lanes-container {
-/*   display: flex; */
-/*   flex-direction: column; */
   flex-grow: 1;
 }
 
@@ -135,7 +127,6 @@ body {
 
 .project-list-item-lane-name-text {
   margin-left: 5px;
-/*   border: 1px solid black; */
   border-radius: 5px;
   padding: 5px;
   min-width: 128px;
@@ -161,17 +152,14 @@ body {
   color: black;
 }
 
+.project-list-item-lane-name-text--palette4 {
+  background: #EE82EE;
+  color: black;
+}
+
 .project-list-item:last-child {
   margin-bottom: 0;
 }
-
-
-.project-list-item-last-status-change-container {
-  
-}
-
-
-
 
 .project-list-header-container {
   display: flex;
