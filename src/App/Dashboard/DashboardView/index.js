@@ -28,7 +28,7 @@ const DashboardView = (props) => {
           <div className='project-list-item-project-name-text'>{project.projectTitle}</div>
           <div className='project-list-item-last-status-change-container'>
             <div className='project-list-item-last-status-change-text'>Last change in status:</div>
-            <div className='project-list-item-last-status-change-date'>{project.lastUpdated}</div>
+            <div className='project-list-item-last-status-change-date'>{project.lastUpdated.toString()}</div>
           </div>
         </div>
         

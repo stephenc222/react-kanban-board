@@ -14,13 +14,13 @@ const ProjectEditorView = (props) => {
     }
 
     return (
-      <div key={index} className='lane-container'>
+      <div key={index} className='project-editor-lane-container'>
         <div className='edit-lane'>
-          <div className='remove-lane-container'>
+          <div className='project-editor-remove-lane-container'>
             <div onClick={removeLane} className='remove-lane'>X</div>
           </div>
-          <div>
-            <input onChange={onProjectLaneTitleChange} value={lane.laneTitle}/>
+          <div className='project-editor-project-lane-title'>
+            <input type='text' size={10} onChange={onProjectLaneTitleChange} value={lane.laneTitle}/>
           </div>
         </div>
       </div>
@@ -30,11 +30,13 @@ const ProjectEditorView = (props) => {
   return (
     <div className='project-editor-top-container'>
       <div className='content-container'>
-        <div className='header'>
-          <div className='back-button'>
-            <button onClick={props.goToDashboard}>Back</button>
+        <div className='header-container'>
+          <div className='header'>
+            <div className='back-button'>
+              <button onClick={props.goToDashboard}>Back</button>
+            </div>
+            <div className='title'>Edit Project</div>
           </div>
-          <div className='title'>Edit Project</div>
         </div>
         <div className='main-content'>
           <div className='project-content'>
@@ -42,25 +44,33 @@ const ProjectEditorView = (props) => {
               <div className='project-title'>
                 <label>
                   Project Name:
-                  <input type='text' />
+                  <input 
+                    type='text' 
+                    onChange={props.onProjectTitleChange}
+                    value={props.projectTitle}
+                  />
                 </label>
               </div>
               <div className='add-lane-container'>
                 <label>
                   Lane Name:
-                  <input type='text' />
+                  <input 
+                    type='text' 
+                    onChange={props.onNewProjectLaneTitleChange}
+                    value={props.newLaneTitle}
+                  />
                 </label>
                 <button onClick={props.addLane}>
                   add lane
                 </button>
               </div>
               <div className='go-to-project'>
-                <button>
-                  Go To Project
+                <button onClick={props.goToProject}>
+                  Start Project
                 </button>
               </div>
             </div>
-            <div className='project-lanes-container'>
+            <div className='project-editor-lanes-container'>
               <div className='project-lanes-container-header'>Project Lanes</div>
               { props.nextProject.lanes.map(renderProjectLanes)}
             </div>

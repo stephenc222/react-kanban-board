@@ -4,6 +4,11 @@
   font-family: 'Josefin Sans', sans-serif;
 }
 
+input[type="text"]
+{
+    font-size:20px;
+}
+
 body {
   padding: 0px;
   margin: 0px;
@@ -17,20 +22,28 @@ body {
   margin: 0px;
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
 }
 
 .content-container {
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
+}
+
+.header {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.35);
+  background: #fff;  
+  z-index: 1;  
+}
+
+.header-container {
+  padding-bottom: 4px;
+  background: lightgrey;
 }
 
 .main-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid blue;
   width: 100%;
   height: 100%;
   background: lightgrey;
@@ -40,14 +53,17 @@ body {
 .header {
   text-align: center;
   display: flex;
+  font-size: 22px;
 }
 
 .back-button {
+  padding: 5px;  
   flex-basis: 0%;
 }
 
 .title {
   flex-basis: 100%;
+  padding: 5px;
 }
 
 .edit-lane {
@@ -57,7 +73,7 @@ body {
   font-size: 22px;
 }
 
-.remove-lane-container {
+.project-editor-remove-lane-container {
   display: flex;
   justify-content: flex-end;
 }
@@ -106,7 +122,7 @@ button {
   font-size: 14px;
 }
 
-.project-lanes-container {
+.project-editor-lanes-container {
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -118,22 +134,24 @@ button {
 
 .project-lanes-container-header {
   text-align: center;
-  font-size: 32px;
+  font-size: 24px;
 }
 
-.lane-container {
+.project-editor-lane-container {
   background: lightblue;
+  max-height: 100px;
   padding: 10px;
   border-radius: 15%;
-  width: 50%;
+  width: 70%;
   margin: 10px;
   box-shadow: 0 0 5px black;
 }
 
 .remove-lane {
   font-size: 14px;
-  min-height: 20px;
-  min-width: 20px;
+  min-height: 25px;
+  min-width: 25px;
+  margin-bottom: 5px;
   border: 1px solid white;
   background: salmon;
   color: white;
@@ -146,6 +164,10 @@ button {
 .remove-lane:hover {
   background-color: red;
   cursor: pointer;
+}
+
+.project-lane-title {
+  padding: 1px;
 }
 
 .project-controls button {

@@ -135,14 +135,25 @@ class MasterContainer extends Component {
   }
 
   goToDashboard({ _id = undefined }) {
-    this.setState({
-      masterPath: `/${this.state.userProfile._id}`,
-      removedProjectId: _id
-    }, () => {
+
+    return new Promise((resolve, reject) => {
       if (_id) {
-        this.removeNewProject({_id})
+        return resolve(this.removeNewProject({_id}))
+      } else {
+        return resolve()
       }
     })
+    .catch(err => console.error('error going to dashboard:', {err}))
+    .then( () => {
+      const masterPath = `/${this.state.userProfile._id}`
+      api.getAllUserProjects({ userId: this.state.userProfile._id })
+      .then(userProjects => this.setState({ 
+        masterPath, 
+        removedProjectId: _id,          
+        userProjects: userProjects.filter(project => project.projectTitle.length)
+      }))
+    })
+
   }
 
   render() {
