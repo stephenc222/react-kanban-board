@@ -2,32 +2,59 @@
   display: flex;
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: lightgrey;
+  background: linear-gradient(to bottom right, lightgrey, lightslategray);
 }
 
-.editor-back-button {
-  padding-bottom: 25px;
-  padding-top: 10px;
-  padding-left: 10px;
+.editor-nav-button {
+  padding: 10px;
 }
 
 .editor-content-container {
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   flex-direction: column;
-  
+  border: 1px solid black;
+  background: beige;
+}
+
+.editor-content-top-data-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.editor-navigation-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 }
 
 .editor-header-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   width: 100%;
 }
 
 .editor-side-inputs-container {
   display: flex;
   padding: 5px;
+  flex-grow: 1;
+  flex-basis: 45%;
+  /* border: 1px solid red; */
+}
+
+.editor-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 1;
+  flex-basis: 55%;
+  /* border: 1px solid red; */
+  
 }
 
 .editor-card-type-input {
@@ -72,19 +99,15 @@
   padding: 5px;  
 }
 
-.editor-update-button-number-container {
+.editor-card-number-container {
   display: flex;
   flex-direction: column;
   font-size: 24px;
   font-weight: bold;
-  justify-content: center;
-  align-items: center;
-}
-
-.editor-update-button {
-  padding-right: 30px;
-  font-size: 24px;
-  display: flex;
+  width: 100%;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 15px;
 }
 
 input[type='button']
@@ -95,6 +118,26 @@ input[type='button']
 .editor-card-summary-container {
   border-top: 1px solid lightgray;
   padding: 10px;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.editor-card-summary-header {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+.editor-card-summary-container-title-text {
+  flex-basis: 95%;
+  flex-grow: 1
+}
+
+.editor-card-remove-card-button {
+  flex-basis: 5%;
+  flex-grow: 1
 }
 
 .draft-editor-controls {

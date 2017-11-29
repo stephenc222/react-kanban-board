@@ -1,0 +1,32 @@
+.project {
+  width: 100vw;
+  height: 100vh;
+}
+
+.header {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.35);
+  background: #fff;  
+  z-index: 1;  
+}
+
+.header-container {
+  padding-bottom: 4px;
+  background: lightgrey;
+}
+
+.back-button {
+  padding: 5px;  
+  flex-basis: 0%;
+}
+
+.title {
+  flex-basis: 100%;
+  padding: 5px;
+}
+
+.project-main-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}

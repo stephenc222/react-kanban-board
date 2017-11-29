@@ -21,13 +21,6 @@ const Board = (props) => {
       <div className='board-controls-container'>
         <div>
           <input
-            onClick={props.goToDashboard}
-            type='button'
-            value='Back to Dashboard'
-          />
-        </div>    
-        <div>
-          <input
             onClick={props.addCard}
             type='button'
             value='Add Card'

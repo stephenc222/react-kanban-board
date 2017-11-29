@@ -4,7 +4,7 @@ import RandomID from 'random-id'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Board from './Board'
 import CardEditor from './CardEditor'
-import './index.css'
+import ProjectView from './ProjectView'
 
 class Project extends Component {
   constructor(props) {
@@ -345,18 +345,17 @@ class Project extends Component {
   }
   render() {
     return (
-      <div className="project">
-        <div className='project-main-container'>
-          <header className="project-header">
-            {this.state.projectTitle}
-          </header>
+        <ProjectView              
+          showEditor={this.state.showEditor}
+          goToDashboard={this.props.goToDashboard}
+          showBoard={this.showBoard}            
+          projectTitle={this.state.projectTitle}>
           {
             this.state.showEditor
             ? (
                 <CardEditor
                   assignedProjectUsers={this.state.assignedProjectUsers}  
                   changeComplexity={this.changeComplexity}  
-                  showBoard={this.showBoard}  
                   cardIndex={this.state.cardIndex}
                   laneIndex={this.state.laneIndex}
                   displayBoard={this.displayBoard}
@@ -368,7 +367,6 @@ class Project extends Component {
                 )
             : (
                 <Board
-                  goToDashboard={this.props.goToDashboard}
                   onBoardSearchReset={this.onBoardSearchReset}  
                   boardControls={this.state.boardControls}
                   onBoardControlChange={this.onBoardControlChange}
@@ -379,8 +377,7 @@ class Project extends Component {
                 />
               )
           }
-        </div>
-      </div>
+      </ProjectView>
     )
   }
 }

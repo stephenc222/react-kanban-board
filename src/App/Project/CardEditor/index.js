@@ -143,13 +143,19 @@ class CardEditor extends Component {
     return (
       <div className='editor-main-container'>
         <div className='editor-content-container'> 
-          <div className='editor-back-button'>
-            <input
-              type='button'
-              value='Back To Board'
-              onClick={this.props.showBoard}
-            />  
-          </div>  
+          <div className='editor-content-top-data-container'>
+            <div className='editor-title-number-container'> 
+              <div className='editor-main-complexity-container'>
+                complexity: {this.state.currentCard.complexity}
+              </div>
+              <div className='editor-card-complexity-container'>
+                {this.state.complexArr.map(this.renderComplexity)}
+              </div>
+            </div>
+            <div className='editor-card-number-container'>
+              {`# ${this.state.currentCard.cardNumber}`}  
+            </div>  
+          </div>
           <div className='editor-header-container'>  
             <div className='editor-side-inputs-container'>
               <div className='editor-card-type-input'>
@@ -174,42 +180,39 @@ class CardEditor extends Component {
                 <br/>
               </div>  
             </div> 
-            <div className='editor-title-input'>
-              <input
-                onChange={this.onCardInputChange}
-                name='title'
-                type='text'
-                value={this.state.currentCard.title}
-              />  
+            <div className='editor-title-container'>
+              <div className='editor-title-input'>
+                <input
+                  onChange={this.onCardInputChange}
+                  name='title'
+                  type='text'
+                  value={this.state.currentCard.title}
+                />  
+              </div>
+              <div className='editor-nav-button'>
+                <input
+                  type='button'
+                  value='Update Card'
+                  onClick={() => this.props.onUpdateCard(this.state.currentCard)}
+                />  
+              </div>  
             </div>  
-              <div className='editor-title-number-container'> 
-                <div className='editor-update-button-number-container'>
-                  <div className='editor-update-button'>
-                    <input
-                      type='button'
-                      value='Update Card'
-                      onClick={() => this.props.onUpdateCard(this.state.currentCard)}
-                    />  
-                  </div>  
-                    {`# ${this.state.currentCard.cardNumber}`}  
-                </div>  
-                <div className='editor-main-complexity-container'>
-                  complexity: {this.state.currentCard.complexity}
-                </div>
-                <div className='editor-card-complexity-container'>
-                  {this.state.complexArr.map(this.renderComplexity)}
-                </div>
-                {!this.props.isNewCard && <div className='editor-card-remove-card-button'>
+          </div>  
+          <div className='editor-card-summary-container'>
+            <div className='editor-card-summary-header'>
+              <div className='editor-card-summary-container-title-text'>
+                Summary:
+              </div>
+              {
+                !this.props.isNewCard && <div className='editor-card-remove-card-button'>
                   <input
                     type='button'
                     value='Remove Card'
                     onClick={this.props.removeCard}
                   />  
-                </div>}
-              </div>
-          </div>  
-          <div className='editor-card-summary-container'>
-            Summary:
+                </div>
+              }
+            </div>
             <div style={{ paddingTop: 15, paddingBottom: 5 }}>
               <div>
                 <BlockStyleControls
