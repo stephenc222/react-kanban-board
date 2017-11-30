@@ -41,10 +41,8 @@
 
 .editor-side-inputs-container {
   display: flex;
-  padding: 5px;
+  padding: 25px;
   flex-grow: 1;
-  flex-basis: 45%;
-  /* border: 1px solid red; */
 }
 
 .editor-title-container {
@@ -52,9 +50,37 @@
   flex-direction: row;
   align-items: center;
   flex-grow: 1;
-  flex-basis: 55%;
-  /* border: 1px solid red; */
+  justify-content: center;
   
+}
+
+.editor-card-remove-card-button-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.editor-card-remove-card-button {
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.editor-card-remove-card-button button {
+  background: #ffb2b2;
+}
+
+.editor-card-remove-card-button button:hover {
+  color: #fff;
+  background: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.editor-card-remove-card-button button:focus {
+  outline: none;  
 }
 
 .editor-card-type-input {
@@ -72,6 +98,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  padding-top: 25px;
   
 }
 
@@ -96,7 +123,7 @@
 .editor-title-number-container {
   display: flex;
   flex-direction: column;
-  padding: 5px;  
+  padding: 25px;  
 }
 
 .editor-card-number-container {
@@ -117,11 +144,40 @@ input[type='button']
 
 .editor-card-summary-container {
   border-top: 1px solid lightgray;
-  padding: 10px;
+  padding: 50px;
   flex-direction: column;
   display: flex;
   width: 100%;
   flex-grow: 1;
+  flex-basis: 80%;  
+}
+
+.editor-card-text-controls-container {
+  padding-top: 15px; 
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-card-draft-editor-container {
+  display: flex;
+  flex-grow: 1;
+  background: white;
+  border: 1px solid lightgray;  
+  margin: 5px;
+  flex-grow: 1;
+}
+
+/* basic CSS class for the Draft Editor itself */
+.draft-editor-item {
+  background: white;  
+}
+
+.editor-card-attachments-container {
+  border-top: 1px solid lightgrey;
+  padding: 50px;
+  flex-basis: 20%;
+  flex-grow: 1;  
 }
 
 .editor-card-summary-header {
@@ -132,11 +188,6 @@ input[type='button']
 
 .editor-card-summary-container-title-text {
   flex-basis: 95%;
-  flex-grow: 1
-}
-
-.editor-card-remove-card-button {
-  flex-basis: 5%;
   flex-grow: 1
 }
 

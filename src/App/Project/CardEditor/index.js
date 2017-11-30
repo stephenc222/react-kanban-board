@@ -4,10 +4,11 @@ import { BlockStyleControls, InlineStyleControls } from './Controls'
 import 'draft-js/dist/Draft.css'
 import './index.css'
 
+// use this for styling the different types of text with targeted CSS classes
 function getBlockStyle(block) {
   switch (block.getType()) {
-    case 'blockquote': return 'draft-editor-blockquote'
-    default: return null
+    case 'blockquote': return 'draft-editor-item'
+    default: return 'draft-editor-item'
   }
 }
 
@@ -30,6 +31,7 @@ class CardEditor extends Component {
     this.onTab = this.onTab.bind(this)
     this.toggleBlockType = this.toggleBlockType.bind(this)
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this)
+    this.onEditorFocus = this.onEditorFocus.bind(this)
     this.state = {
       complexArr: [1, 2, 3, 4, 5],
       currentCard: {},
@@ -61,6 +63,11 @@ class CardEditor extends Component {
         currentCard: this.props.currentCard
       })
     }
+  }
+
+  onEditorFocus(e) {
+    e.stopPropagation() 
+    this.draftEditorRef.focus()
   }
 
   onTextChange(editorState) {
@@ -190,31 +197,32 @@ class CardEditor extends Component {
                 />  
               </div>
               <div className='editor-nav-button'>
-                <input
+                <button
                   type='button'
-                  value='Update Card'
-                  onClick={() => this.props.onUpdateCard(this.state.currentCard)}
-                />  
+                  onClick={() => this.props.onUpdateCard(this.state.currentCard)}>
+                  Update Card
+                </button>
               </div>  
             </div>  
+            <div className='editor-card-remove-card-button-container'>
+            {
+              !this.props.isNewCard && <div className='editor-card-remove-card-button'>
+                <button
+                  type='button'
+                  onClick={this.props.removeCard}>
+                  Remove Card
+                </button> 
+              </div>
+            }
+            </div>
           </div>  
           <div className='editor-card-summary-container'>
             <div className='editor-card-summary-header'>
               <div className='editor-card-summary-container-title-text'>
                 Summary:
               </div>
-              {
-                !this.props.isNewCard && <div className='editor-card-remove-card-button'>
-                  <input
-                    type='button'
-                    value='Remove Card'
-                    onClick={this.props.removeCard}
-                  />  
-                </div>
-              }
             </div>
-            <div style={{ paddingTop: 15, paddingBottom: 5 }}>
-              <div>
+            <div className='editor-card-text-controls-container' >
                 <BlockStyleControls
                   editorState={this.state.editorState}
                   onToggle={this.toggleBlockType}
@@ -223,19 +231,25 @@ class CardEditor extends Component {
                   editorState={this.state.editorState}
                   onToggle={this.toggleInlineStyle}
                 />
-              </div>  
             </div>  
-              <DraftEditor
-                handleKeyCommand={this.handleKeyCommand}            
-                editorState={this.state.editorState}
-                onChange={this.onTextChange}
-                placeholder={hidePlaceholder ? '' : "Card Summary here..."}
-                blockStyleFn={getBlockStyle}
-                customStyleMap={styleMap}
-                onTab={this.onTab}
-                spellCheck={true}
-              />            
+              <div onClick={this.onEditorFocus} className='editor-card-draft-editor-container'>
+                <DraftEditor
+
+                  ref={elem => this.draftEditorRef = elem}
+                  handleKeyCommand={this.handleKeyCommand}            
+                  editorState={this.state.editorState}
+                  onChange={this.onTextChange}
+                  placeholder={hidePlaceholder ? '' : "Card Summary here..."}
+                  blockStyleFn={getBlockStyle}
+                  customStyleMap={styleMap}
+                  onTab={this.onTab}
+                  spellCheck={true}
+                />    
+              </div>        
           </div>  
+          <div className='editor-card-attachments-container'>
+            Attachments:
+          </div>
         </div>  
       </div>
     )
