@@ -70,7 +70,7 @@ input[type='text']:focus {
   justify-content: center;
 }
 
-.welcome-page-input--submit input[type='button'] {
+.welcome-page-input--submit button {
   width: 100%;
   background-color: #6699cc;
   color: white;
@@ -83,11 +83,11 @@ input[type='text']:focus {
   transition: 0.25s ease;
 }
 
-.welcome-page-input--submit input[type='button']:hover {
+.welcome-page-input--submit button:hover {
   background-color: #5381a8;
 }
 
-.welcome-page-input--submit input[type='button']:focus {
+.welcome-page-input--submit button:focus {
   outline:0;
   background-color: #5381a8;  
 }

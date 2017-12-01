@@ -10,7 +10,6 @@ class Welcome extends Component {
 
     this.state = {
       email: '',
-      password: '',
     }
   }
 
@@ -21,13 +20,24 @@ class Welcome extends Component {
   onSubmit() {
     const {
       email,
-      password
     } = this.state
 
-    this.props.createUser({email, password})
+    window.crypto.subtle.digest(
+      {
+        name: "SHA-1",
+      },
+      new Uint8Array(this.passwordRef.value.toString().split(''))
+    )
+    .then(hash => {
+      const password = new Uint8Array(hash)
+      this.props.createUser({email, password})
+    })
+    .catch(err => {
+      console.error(err);
+    })
   }
 
-  onTextChange(event) {
+  onTextChange(event) {    
     this.setState({[event.target.name]: event.target.value})
   }
 
@@ -43,6 +53,7 @@ class Welcome extends Component {
     return (
       <WelcomeView
         password={password}
+        getPasswordRef={(elem) => this.passwordRef = elem}
         focusEmailInput={this.focusEmailInput}
         email={email}
         onTextChange={this.onTextChange}

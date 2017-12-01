@@ -26,14 +26,16 @@ const WelcomeView = (props) => {
             </div>
             <div>
               <input
-                type='text'
-                name='password'
-                onChange={props.onTextChange}
-                value={props.password} />
+                ref={props.getPasswordRef}
+                type='password'
+                style={{minWidth: '190px', minHeight: '24px'}}
+              />
             </div>
           </div>
           <div className='welcome-page-input--submit'>
-            <input type='button' onClick={props.onSubmit} value='Create Account'/>  
+            <button onClick={props.onSubmit}>
+              Create Account
+            </button>  
           </div>  
         </div>
       </div>

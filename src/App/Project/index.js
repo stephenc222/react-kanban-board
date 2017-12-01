@@ -156,7 +156,7 @@ class Project extends Component {
       laneType: 'Planned',
       title: '',
       type: 'userStory'
-    }
+    }   
 
     this.setState({
       showEditor: true,
@@ -221,9 +221,14 @@ class Project extends Component {
 
     if (isNewCard) {
       // for now assuming adding to first lane
-      lanes[0].cards[0].type === 'placeholder'
-      ? lanes[0].cards.pop() && lanes[0].cards.push(currentCard)
-      : lanes[0].cards.push(currentCard)      
+      const plannedLane = lanes[0]
+
+      const foundIndex = plannedLane.cards.findIndex( card => card.isPlaceholderCard)
+
+      foundIndex > -1
+      ? plannedLane.cards.splice(foundIndex, 1) && plannedLane.cards.push(currentCard)
+      : plannedLane.cards.push(currentCard)    
+
       return this.setState({
         lanes,
         maxCardNumber: ++maxCardNumber,
