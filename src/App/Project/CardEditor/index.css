@@ -137,11 +137,6 @@
   padding-right: 15px;
 }
 
-input[type='button']
-{
-  font-size: 32px;    
-}
-
 .editor-card-summary-container {
   border-top: 1px solid lightgray;
   padding: 50px;
@@ -163,9 +158,10 @@ input[type='button']
   display: flex;
   flex-grow: 1;
   background: white;
+  padding: 15px;
   border: 1px solid lightgray;  
   margin: 5px;
-  flex-grow: 1;
+  flex-grow: 1;  
 }
 
 /* basic CSS class for the Draft Editor itself */

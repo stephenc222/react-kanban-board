@@ -200,7 +200,7 @@ class CardEditor extends Component {
                 <button
                   type='button'
                   onClick={() => this.props.onUpdateCard(this.state.currentCard)}>
-                  Update Card
+                  {this.props.isNewCard ? 'Add Card' : 'Update Card'}
                 </button>
               </div>  
             </div>  

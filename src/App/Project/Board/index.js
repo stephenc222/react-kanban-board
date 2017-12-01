@@ -20,11 +20,9 @@ const Board = (props) => {
     <div className='board-main-container'>
       <div className='board-controls-container'>
         <div>
-          <input
-            onClick={props.addCard}
-            type='button'
-            value='Add Card'
-          />
+          <button onClick={props.addCard}>
+            Add Card
+          </button>
         </div>    
         <div className='board-controls--sort-control'>
           Sort By:&nbsp;
@@ -53,17 +51,16 @@ const Board = (props) => {
             Search:&nbsp;  
             <input 
               type="text" 
-              style={{width: '225px'}}
+              style={{width: '275px'}}
               placeholder='search card title, summary or number...'
               name="searchValue"   
               value={props.boardControls.searchValue}
               onChange={props.onBoardControlChange} />
           </label> 
           &nbsp;
-          <input
-            type='button'
-            onClick={props.onBoardSearchReset}
-            value='Reset' />
+          <button onClick={props.onBoardSearchReset}>
+            Reset
+          </button>
         </div>  
         <div className='board-controls--search-control'>
         </div>  
